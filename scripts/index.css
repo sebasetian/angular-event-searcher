@@ -1,0 +1,14 @@
+.px-7 {
+  padding-left: 120px !important;
+  padding-right: 120px !important;
+}
+.w-60 {
+	width: 80%;
+}
+.material-icons {
+	vertical-align:bottom;
+}
+.requiredField:after {
+	content: " *";
+	color:red;
+}

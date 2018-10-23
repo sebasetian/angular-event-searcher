@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8" />
+	<title>Page Title</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	 crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="index.js"></script>
+	<script src="server.js"></script>
+</head>
+<body onload="checkForm()">
+	<div class="bg-light border mx-auto w-60 px-7 py-4 my-1">
+		<form id="need-validation" novalidate>
+			<h5 class="text-center font-weight-bold">Entertainment Event Ticket Search</h5>
+			<fieldset>
+			<div class="form-group row">
+				<label for="Keyword" class="col-3 col-form-label requiredField">Keyword</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="Keyword" placeholder="Enter Artist, Team or Event Name (eg. Lakers)" required>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="Category" class="col-3 col-form-label">Category</label>
+				<div class="col-sm-3">
+					<select class="custom-select" id="Category">
+						<option value="all" selected>All</option>
+						<option value="music">Music</option>
+						<option value="sports">Sports</option>
+						<option value="arts">Arts & Theatre</option>
+						<option value="film">Film</option>
+						<option value="miscellaneous">Miscellaneous</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="Distance" class="col-3 col-form-label">Distance</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="Distance" placeholder="10">
+				</div>
+				<div class="col-sm-3">
+					<select class="custom-select" id="DistanceUnit">
+						<option value="miles" selected>Miles</option>
+						<option value="kilometers">Kilometers</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="From" class="col-3 col-form-label requiredField">From</label>
+				<div class="col-sm-8">
+					<div class="custom-control custom-radio">
+						<input type="radio" id="StartLocationHere" name="StartLocation" value="Here" class="custom-control-input" checked>
+						<label class="custom-control-label" for="StartLocationHere">Current location</label>
+					</div>
+					<div class="custom-control custom-radio">
+						<input type="radio" id="StartLocationOther" name="StartLocation" value="Other" class="custom-control-input">
+						<label class="custom-control-label" for="StartLocationOther">Other. Please specify:</label>
+					</div>
+					<input type="text" class="form-control" id="location" disabled required>
+				</div>
+			</div>
+			</fieldset>
+			<button type="submit" class="btn btn-primary" id="submitBtn" disabled><i class="material-icons">search</i>Search</button>
+			<button type="btn" class="btn "><i class="material-icons md-18">clear_all</i>Clear</button>
+		</form>
+	</div>
+</body>
+</html>
