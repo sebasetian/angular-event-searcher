@@ -1,14 +1,30 @@
 const express = require("express");
+const axios = require('axios');
 const app = express();
-const http = require('http');
-const port = 8081;
+const port = process.env.PORT || 8082;
 app.use(express.static(__dirname + '/scripts'));
 // Point static path to dist
 app.use(express.static(__dirname + '/dist/hw8'));
-app.set('port', process.env.PORT || port);
+app.set('port', port);
 app.get('/', (req, res) => 
 	res.sendFile('index.html')
 );
+app.get('/auto-complete/:name',(req,res) => {
+	axios.get('https://app.ticketmaster.com/discovery/v2/suggest?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=' + req.params.name)
+		.then(events => {
+			console.log("api returned");
+			if (events.data._embedded != undefined) {
+				console.log(events.data._embedded.attractions[0].name);
+				res.send(events.data._embedded.attractions);
+			} else {
+				res.send("");
+			}
+		})
+		.catch(err => {
+			console.log(err.response.status);
+		})
+})
 // "https://maps.googleapis.com/maps/api/js?key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q"
 // "https://app.ticketmaster.com/discovery/v2/events.json?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=" 
-app.listen(port, () => console.log(`Example app listening on port ${process.env.PORT || port}!`));
+// https://app.ticketmaster.com/discovery/v2/suggest?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=laker
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
