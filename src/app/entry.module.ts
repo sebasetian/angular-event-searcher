@@ -5,14 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './main.component';
 import { MainService } from './main.service';
 import { HttpClientModule } from  '@angular/common/http';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
 	declarations: [
-		MainComponent
+		MainComponent,
+		ResultComponent
 	],
 	imports: [
 		FormsModule,
