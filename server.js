@@ -26,7 +26,6 @@ app.get('/auto-complete/:name',(req,res) => {
 });
 app.post('/form/', bodyParser.json(),(req,res) => {
 	let formField = req.body;
-	console.log(formField);
 	let getHashCode = geoHashFun.encode(formField.lat, formField.lng);
 	axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=' + formField.keyword + getSegmentId(formField.category) + "&radius=" +
 		formField.distance + '&unit=' + formField.distanceUnit + '&geoPoint=' + getHashCode)
