@@ -11,14 +11,14 @@
 </head>
 <body onload="checkForm()">
 	<div class="bg-light border mx-auto w-60 px-7 py-4 my-1">
-		<form id="need-validation" (ngSubmit)="onSubmit()"  novalidate>
+		<form id="need-validation" (ngSubmit)="submitForm()"  novalidate>
 			<h5 class="text-center font-weight-bold">Entertainment Event Ticket Search</h5>
 			<fieldset>
 			<div class="form-group row">
 				<label for="Keyword" class="col-2 col-form-label requiredField">Keyword</label>
 					<div class="col-sm-8">
 					<mat-form-field class="full-width" appearance="standard">
-						<input type="text" class="form-control" [(ngModel)]="form.keyword" matInput placeholder="Enter Artist, Team or Event Name (eg. Lakers)" [formControl]="searchEvent" [matAutocomplete]="auto" id="Keyword" 
+						<input type="text" class="form-control" [(ngModel)]="form.keyword" matInput placeholder="Enter Artist, Team or Event Name (eg. Lakers)" [formControl]="searchEventKeyword" [matAutocomplete]="auto" id="Keyword" 
 						 required>
 						<mat-autocomplete #auto="matAutocomplete">
 							<mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
@@ -41,8 +41,8 @@
 				</div>
 				<div class="col-sm-3">
 					<select class="custom-select" [(ngModel)]="form.distanceUnit" name="distanceUnit" id="DistanceUnit">
-						<option value="Miles">Miles</option>
-						<option value="Kilometers">Kilometers</option>
+						<option value="miles">Miles</option>
+						<option value="kilometers">Kilometers</option>
 					</select>
 				</div>
 			</div>
@@ -62,9 +62,15 @@
 			</div>
 			</fieldset>
 			<button type="submit" class="btn btn-primary" id="submitBtn" disabled><i class="material-icons">search</i>Search</button>
-			<button type="btn" class="btn "><i class="material-icons md-18">clear_all</i>Clear</button>
+			<button type="button" class="btn" (click)="clearAll()"><i class="material-icons md-18">clear_all</i>Clear</button>
 		</form>
 	</div>
-	<result-field></result-field>
+	<div class="btn-field">
+		<button type="submit" class="btn btn-primary">Result</button>
+		<button type="button" class="btn">Favorite</button>
+	</div>
+	<div [hidden]='!submitted' class="result-field">
+		<result-field></result-field>
+	</div>
 </body>
 </html>

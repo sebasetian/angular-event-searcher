@@ -1,12 +1,11 @@
 :host {             // host targets selector: 'home'
-
-    display: block;
-    left: 0;
-    width: 100%;    // takes parent width        
-    height: 100%;   // takes parent height   
-}
-.btn-field {
 	display: flex;
-	align-items: center;
-	justify-content: center;
+    left: 0;
+    width: 80%;    // takes parent width        
+	height: 100%;   // takes parent height   
+	
+}
+table {
+	margin-top:10px;
+	width: 100%;
 }

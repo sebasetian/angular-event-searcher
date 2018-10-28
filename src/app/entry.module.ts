@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatTableModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MainComponent } from './main.component';
@@ -25,6 +25,7 @@ import { ResultComponent } from './result/result.component';
 		MatFormFieldModule,
 		MatToolbarModule,
 		MatInputModule,
+		MatTableModule,
 		ReactiveFormsModule,
 		HttpClientModule
 	],
