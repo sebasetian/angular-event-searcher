@@ -13,11 +13,13 @@ export class MainService {
 	urlAutoComplete: string;
 	urlForm: string;
 	formObserable: Observable<formField>;
+	currPane: PaneType;
 	private eventSource = new Subject<SearchEvents[]>();
 	currEvents = this.eventSource.asObservable();
 	constructor(private http: HttpClient) {
 		this.urlAutoComplete ='/auto-complete/';
 		this.urlForm = '/form/';
+		this.currPane ='resPane';
 	}
 	searchAutoComplete(word) {
 		if (word == '') {
@@ -52,3 +54,4 @@ export class MainService {
 	}
 
 }
+type PaneType = 'resPane' | 'favoritePane' | 'detailPane';

@@ -9,11 +9,13 @@ import { MainComponent } from './main.component';
 import { MainService } from './main.service';
 import { HttpClientModule } from  '@angular/common/http';
 import { ResultComponent } from './result/result.component';
+import { SlideComponent } from './slide/slide.component';
 
 @NgModule({
 	declarations: [
 		MainComponent,
-		ResultComponent
+		ResultComponent,
+		SlideComponent
 	],
 	imports: [
 		FormsModule,

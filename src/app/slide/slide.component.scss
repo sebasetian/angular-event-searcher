@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+.panes {
+  height: 100%;
+  width: 300%;
+  margin-left: -100%;
+  display: flex;
+  div {
+    flex: 1;
+  }
+}

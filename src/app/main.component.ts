@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MainService } from './main.service';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { formField } from './schema/formField';
+import { ResultComponent } from './result/result.component';
 @Component({
   selector: 'app-root',
   templateUrl: './main.component.html',
@@ -22,6 +23,13 @@ export class MainComponent {
 	}
 	clearAll() {
 		this.submitted = false;
+		this.service.currPane = 'resPane';
+	}
+	showRes() {
+		this.service.currPane = 'resPane';
+	}
+	showFav() {
+		this.service.currPane = 'favoritePane';
 	}
 	constructor(private service: MainService) {
 		this.searchEventKeyword.valueChanges
@@ -35,3 +43,5 @@ export class MainComponent {
 		});
 	} 
 }
+
+type PaneType = 'resPane' | 'favoritePane' | 'detailPane';

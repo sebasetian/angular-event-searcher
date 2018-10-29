@@ -66,8 +66,8 @@
 		</form>
 	</div>
 	<div class="btn-field">
-		<button type="submit" class="btn btn-primary">Result</button>
-		<button type="button" class="btn">Favorite</button>
+		<button type="button" (click)="showRes()" class="btn btn-primary">Result</button>
+		<button type="button" (click)="showFav()" class="btn">Favorite</button>
 	</div>
 	<div [hidden]='!submitted' class="result-field">
 		<result-field></result-field>

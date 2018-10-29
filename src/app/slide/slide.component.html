@@ -1,0 +1,11 @@
+<div class="panes" [@slide]="activePane">
+	<div class='pane'>
+		<ng-content select="[favoritePane]"></ng-content>
+	</div>
+	<div class='pane'>
+		<ng-content select="[resPane]"></ng-content>
+	</div>
+	<div class='pane'>
+		<ng-content select="[detailPane]"></ng-content>
+	</div>
+</div>
