@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchEvents } from '../schema/ticketMasterEvents';
 import { MainService } from '../main.service';
 import { MatTableDataSource } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
+import { PaneType } from '../pane-type.enum'
 @Component({
 	selector: 'result-field',
 	templateUrl: './result.component.html',
@@ -12,37 +12,27 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class ResultComponent implements OnInit {
 	searchEvents: SearchEvents[];
 	constructor(private service: MainService) {
-		this.service.currPane = 'resPane';
+		this.service.currPane = PaneType.resPane;
 	}
 	column: string[] = ['#','Date','Event','Category','Venue Info','Favorite'];
-	isFavorite: boolean[];
 	eventData: MatTableDataSource<SearchEvents>;
-	selection = new SelectionModel<SearchEvents>(false,[]);
 	
-	changeFavorite(i) {
-		this.isFavorite[i] = !this.isFavorite[i];
-	}
 	showDetail() {
-		this.service.currPane = 'detailPane';
+		this.service.currPane = PaneType.detailPane;
 	}
 	highlightRow(row) {
-		if (this.selection.isSelected(row)) {
-			this.selection.deselect(row);
+		if (this.service.selection.isSelected(row)) {
+			this.service.selection.deselect(row);
 		} else {
-			this.selection.select(row);
+			this.service.selection.select(row);
 		}
 	}
 	ngOnInit() {
 		this.service.currEvents.subscribe(events => {
 			if (events != null && events[0].name != undefined) {
 				this.searchEvents = events;
-				this.isFavorite = [];
 				this.eventData = new MatTableDataSource<SearchEvents>(this.searchEvents);
-				for (let i = 0; i < events.length;i++) {
-					this.isFavorite[i] = false;
-				}
 			}
 		});
 	}
 }
-type PaneType = 'resPane' | 'favoritePane' | 'detailPane';

@@ -1,0 +1,14 @@
+@import '../result/result.component.scss';
+.buttons {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 30px;
+	margin-right: 70%;
+	width: 100%;
+}
+.twitter {
+	height: 36px;
+}
+.otherButtons {
+	display: flex;
+}

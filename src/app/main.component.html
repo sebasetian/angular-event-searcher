@@ -1,76 +1,60 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-	<meta charset="utf-8" />
-	<title>{{title}}</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	 crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="index.js"></script>
- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-</head>
-<body onload="checkForm()">
-	<div class="bg-light border mx-auto w-60 px-7 py-4 my-1">
-		<form id="need-validation" (ngSubmit)="submitForm()"  novalidate>
-			<h5 class="text-center font-weight-bold">Entertainment Event Ticket Search</h5>
-			<fieldset>
-			<div class="form-group row">
-				<label for="Keyword" class="col-2 col-form-label requiredField">Keyword</label>
-					<div class="col-sm-8">
-					<mat-form-field class="full-width" appearance="standard">
-						<input type="text" class="form-control" [(ngModel)]="form.keyword" matInput placeholder="Enter Artist, Team or Event Name (eg. Lakers)" [formControl]="searchEventKeyword" [matAutocomplete]="auto" id="Keyword" 
-						 required>
-						<mat-autocomplete #auto="matAutocomplete">
-							<mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
-						</mat-autocomplete>
-					</mat-form-field>
-					</div>
-			</div>
-			<div class="form-group row">
-				<label for="Category" class="col-2 col-form-label">Category</label>
-				<div class="col-sm-2">
-					<select class="custom-select"[(ngModel)]="form.category" name="category" id="Category">
-						<option *ngFor="let category of categories" [value]="category"> {{category}}</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="Distance" class="col-2 col-form-label">Distance</label>
-				<div class="col-sm-3">
-					<input type="number" class="form-control" [(ngModel)]="form.distance" name="distance" id="Distance" placeholder="10">
-				</div>
-				<div class="col-sm-3">
-					<select class="custom-select" [(ngModel)]="form.distanceUnit" name="distanceUnit" id="DistanceUnit">
-						<option value="miles">Miles</option>
-						<option value="kilometers">Kilometers</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="From" class="col-2 col-form-label requiredField">From</label>
+<div class="bg-light border mx-auto w-60 px-7 py-4 my-1">
+	<form id="need-validation" [formGroup]="eventForm" (ngSubmit)="submitForm()"  novalidate>
+		<h5 class="text-center font-weight-bold">Entertainment Event Ticket Search</h5>
+		<fieldset>
+		<div class="form-group row">
+			<label for="Keyword" class="col-2 col-form-label requiredField">Keyword</label>
 				<div class="col-sm-8">
-					<div class="custom-control custom-radio">
-						<input type="radio" id="StartLocationHere" [(ngModel)]="form.fromWhere" name="fromWhere" value="Here" class="custom-control-input" checked>
-						<label class="custom-control-label" for="StartLocationHere">Current location</label>
-					</div>
-					<div class="custom-control custom-radio">
-						<input type="radio" id="StartLocationOther"[(ngModel)]="form.fromWhere" name="fromWhere" value="Other" class="custom-control-input">
-						<label class="custom-control-label" for="StartLocationOther">Other. Please specify:</label>
-					</div>
-					<input type="text" class="form-control" id="location" [(ngModel)]="form.location" name="location" disabled required>
+				<input type="text" class="form-control" placeholder="Enter Artist, Team or Event Name (eg. Lakers)"
+										 [(ngModel)]="form.keyword" formControlName='keyword' [matAutocomplete]="auto">
+					<mat-autocomplete #auto="matAutocomplete">
+						<mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+					</mat-autocomplete>
 				</div>
+		</div>
+		<div class="form-group row">
+			<label for="Category" class="col-2 col-form-label">Category</label>
+			<div class="col-sm-2">
+				<select class="custom-select" formControlName='category' [(ngModel)]="form.category" name="category" id="Category">
+					<option *ngFor="let category of categories" [value]="category"> {{category}}</option>
+				</select>
 			</div>
-			</fieldset>
-			<button type="submit" class="btn btn-primary" id="submitBtn" disabled><i class="material-icons">search</i>Search</button>
-			<button type="button" class="btn" (click)="clearAll()"><i class="material-icons md-18">clear_all</i>Clear</button>
-		</form>
-	</div>
-	<div class="btn-field">
-		<button type="button" (click)="showRes()" class="btn btn-primary">Result</button>
-		<button type="button" (click)="showFav()" class="btn">Favorite</button>
-	</div>
-	<div [hidden]='!submitted' class="result-field">
-		<result-field></result-field>
-	</div>
-</body>
-</html>
+		</div>
+		<div class="form-group row">
+			<label for="Distance" class="col-2 col-form-label">Distance</label>
+			<div class="col-sm-3">
+				<input type="number" class="form-control" formControlName='distance' [(ngModel)]="form.distance" name="distance" id="Distance" placeholder="10">
+			</div>
+			<div class="col-sm-3">
+				<select class="custom-select" formControlName='distanceUnit' [(ngModel)]="form.distanceUnit" name="distanceUnit" id="DistanceUnit">
+					<option value="miles">Miles</option>
+					<option value="kilometers">Kilometers</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="From" class="col-2 col-form-label requiredField">From</label>
+			<div class="col-sm-8">
+				<div class="custom-control custom-radio">
+					<input type="radio" id="StartLocationHere" formControlName='fromWhere' [(ngModel)]="form.fromWhere" name="fromWhere" value="Here" class="custom-control-input">
+					<label class="custom-control-label" for="StartLocationHere">Current location</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input type="radio" id="StartLocationOther" formControlName='fromWhere' [(ngModel)]="form.fromWhere" name="fromWhere" value="Other" class="custom-control-input">
+					<label class="custom-control-label" for="StartLocationOther">Other. Please specify:</label>
+				</div>
+				<input type="text" class="form-control" id="location" formControlName='location' [(ngModel)]="form.location" name="location">
+			</div>
+		</div>
+		</fieldset>
+		<button type="submit" class="btn btn-primary" id="submitBtn" [disabled]="eventForm.invalid"><i class="material-icons">search</i>Search</button>
+		<button type="button" class="btn" (click)="clearAll()"><i class="material-icons md-18">clear_all</i>Clear</button>
+	</form>
+</div>
+<div class="btn-field">
+	<button type="button" (click)="showRes()" class="btn" [ngClass]="{'btn-primary': service.currPane !== 'favoritePane'}">Result</button>
+	<button type="button" (click)="showFav()" class="btn" [ngClass]="{'btn-primary': service.currPane === 'favoritePane'}">Favorite</button>
+</div>
+<div [hidden]='!submitted' class="result-field">
+	<result-field></result-field>
+</div>

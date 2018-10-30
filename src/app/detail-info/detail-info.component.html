@@ -1,0 +1,35 @@
+<h1>{{eventName}}</h1>
+<div class='buttons'>
+	<button type="button" class="border retButton" (click)="showList()"><i class="material-icons">keyboard_arrow_left</i>List</button>
+	<div class='otherButtons'>
+			<div><img src="http://csci571.com/hw/hw8/Images/Twitter.png" class="twitter"></div>
+			<div class="favorite" propagationStop (click)="service.changeFavorite(event)"><i class="material-icons border" *ngIf="!service.favoriteList.isSelected(event)">
+					star_border
+				</i><i class="material-icons yellow border" *ngIf="service.favoriteList.isSelected(event)">
+					star
+				</i>
+			</div>
+	</div>
+</div>
+<ngb-tabset class="tabset1">
+	<ngb-tab title="Event">
+		<ng-template ngbTabContent>
+			<p>Event</p>
+		</ng-template>
+	</ngb-tab>
+	<ngb-tab title="Artists/Teams">
+		<ng-template ngbTabContent>
+			<p>Artists</p>
+		</ng-template>
+	</ngb-tab>
+	<ngb-tab title="Venue">
+		<ng-template ngbTabContent>
+			<p>Venue</p>
+		</ng-template>
+	</ngb-tab>
+	<ngb-tab title="Upcoming Event">
+		<ng-template ngbTabContent>
+			<p>Upcoming</p>
+		</ng-template>
+	</ngb-tab>
+</ngb-tabset>

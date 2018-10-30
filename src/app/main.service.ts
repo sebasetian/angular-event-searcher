@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { autocompEvents, SearchEvents } from './schema/ticketMasterEvents';
 import { formField } from './schema/formField';
 import { map, switchMap } from 'rxjs/operators';
-import { Observable, EMPTY, BehaviorSubject, Subject,of} from 'rxjs';
+import { Observable, EMPTY, Subject,of} from 'rxjs';
 import { ipApiJson } from './schema/ip-api';
+import { PaneType } from './pane-type.enum'
+import { SelectionModel } from '@angular/cdk/collections';
 @Injectable({
 	providedIn: 'root',
 })
@@ -14,12 +16,21 @@ export class MainService {
 	urlForm: string;
 	formObserable: Observable<formField>;
 	currPane: PaneType;
+	favoriteList = new SelectionModel<SearchEvents>(true, []);
+	selection = new SelectionModel<SearchEvents>(false, []);
 	private eventSource = new Subject<SearchEvents[]>();
 	currEvents = this.eventSource.asObservable();
 	constructor(private http: HttpClient) {
 		this.urlAutoComplete ='/auto-complete/';
 		this.urlForm = '/form/';
-		this.currPane ='resPane';
+		this.currPane = PaneType.resPane;
+	}
+	changeFavorite(event) {
+		if (this.favoriteList.isSelected(event)) {
+			this.favoriteList.deselect(event);
+		} else {
+			this.favoriteList.select(event);
+		}
 	}
 	searchAutoComplete(word) {
 		if (word == '') {
@@ -54,4 +65,3 @@ export class MainService {
 	}
 
 }
-type PaneType = 'resPane' | 'favoritePane' | 'detailPane';
