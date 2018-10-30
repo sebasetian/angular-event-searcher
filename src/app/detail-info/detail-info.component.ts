@@ -21,7 +21,7 @@ export class DetailInfoComponent implements OnInit {
 	ngOnInit() {
 		this.service.selection.changed.subscribe(event => {
 			this.event = event.source.selected[0];
-			this.eventName = this.event.name;
+			this.eventName = this.event == null? 'null' : this.event.name;
 		});
 	}
 

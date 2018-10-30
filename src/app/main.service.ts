@@ -18,6 +18,7 @@ export class MainService {
 	currPane: PaneType;
 	favoriteList = new SelectionModel<SearchEvents>(true, []);
 	selection = new SelectionModel<SearchEvents>(false, []);
+	
 	private eventSource = new Subject<SearchEvents[]>();
 	currEvents = this.eventSource.asObservable();
 	constructor(private http: HttpClient) {
