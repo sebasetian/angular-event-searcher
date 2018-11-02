@@ -104,6 +104,8 @@ function getSegmentId(category) {
 			return "";
 	}
 }
+// https://api.songkick.com/api/3.0/search/venues.json?query={venue_name}&apikey=uVD27vJiXMdv5xMH
+// https://api.songkick.com/api/3.0/venues/{venue_id}/calendar.json?apikey={your_api_key}
 // https://maps.googleapis.com/maps/api/geocode/json?address=University+of+Southern+California+CA&key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q
 // AIzaSyAshBhvq4KJhOOj7Lw-vd19vOWDLDHV_KM
 // "https://maps.googleapis.com/maps/api/js?key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q"

@@ -24,7 +24,8 @@ import { ArtistDetailTableComponent } from './artist-detail-table/artist-detail-
 import { ArtistDetailTableWrapperComponent } from './artist-detail-table-wrapper/artist-detail-table-wrapper.component';
 import { DecimalPipe } from '@angular/common';
 import { VenueTableComponent } from './venue-table/venue-table.component';
-
+import { FirstFormComponent } from './firstform/firstform.component';
+import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.component'
 @NgModule({
 	declarations: [
 		MainComponent,
@@ -35,7 +36,9 @@ import { VenueTableComponent } from './venue-table/venue-table.component';
 		EventDetailTableComponent,
 		ArtistDetailTableComponent,
 		ArtistDetailTableWrapperComponent,
-		VenueTableComponent
+		VenueTableComponent,
+		FirstFormComponent,
+		UpcomingEventsComponent
 	],
 	imports: [
 		FormsModule,
