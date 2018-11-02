@@ -78,6 +78,16 @@ app.get('/img-search/:name', (req,res) => {
 		}
 	})
 })
+app.get('/geo/:name', (req,res) => {
+	axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + req.params.name +'&key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q')
+	.then (geolocation => {
+		if (geolocation.data.results.length > 0) {
+			res.send(geolocation.data.results[0].geometry.location);
+		} else {
+			res.send("");
+		}
+	})
+})
 function getSegmentId(category) {
 	switch (category) {
 		case "Music":
@@ -94,6 +104,7 @@ function getSegmentId(category) {
 			return "";
 	}
 }
+// https://maps.googleapis.com/maps/api/geocode/json?address=University+of+Southern+California+CA&key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q
 // AIzaSyAshBhvq4KJhOOj7Lw-vd19vOWDLDHV_KM
 // "https://maps.googleapis.com/maps/api/js?key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q"
 // "https://app.ticketmaster.com/discovery/v2/events.json?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=" 

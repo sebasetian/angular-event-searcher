@@ -22,7 +22,6 @@ export class ResultComponent implements OnInit {
 	}
 	highlightRow(row) {
 		this.service.selection.toggle(row);
-		console.log(row);
 	}
 	ngOnInit() {
 		this.service.currEvents.subscribe(events => {

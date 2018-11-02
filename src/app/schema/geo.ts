@@ -14,3 +14,7 @@ export class ipApiJson {
 	timezone: string;
 	zip: string;
 }
+export class GeoCoding {
+	lat:number;
+	lng:number;
+}

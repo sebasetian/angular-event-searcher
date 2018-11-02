@@ -4,7 +4,7 @@ import { AutocompEvents, SearchEvents } from './schema/ticketMasterEvents';
 import { formField } from './schema/formField';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable, EMPTY, Subject,of} from 'rxjs';
-import { ipApiJson } from './schema/ip-api';
+import { ipApiJson, GeoCoding } from './schema/geo';
 import { PaneType } from './pane-type.enum'
 import { SelectionModel } from '@angular/cdk/collections';
 import { ArtistInfo, CustomSearchImg } from './schema/ArtistTeamInfo';
@@ -17,6 +17,7 @@ export class MainService {
 	urlForm: string;
 	urlSpotify: string;
 	urlGoogleImgSearch: string;
+	urlGeoCoding:string;
 	formObserable: Observable<formField>;
 	currPane: PaneType;
 	favoriteList = new SelectionModel<SearchEvents>(true, []);
@@ -31,6 +32,10 @@ export class MainService {
 		this.currPane = PaneType.resPane;
 		this.urlSpotify = '/spotify/';
 		this.urlGoogleImgSearch = '/img-search/';
+		this.urlGeoCoding = '/geo/';
+	}
+	findGeoLocation(address) {
+		return this.http.get<GeoCoding>(this.urlGeoCoding + address);
 	}
 	findImg(name:string,artist: ArtistInfo) {
 		this.http.get<CustomSearchImg[]>(this.urlGoogleImgSearch + name).subscribe((items: CustomSearchImg[]) => {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+///<reference types="@types/googlemaps" />
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { VenueInfo } from '../schema/ArtistTeamInfo';
 import { MainService } from '../main.service';
 
@@ -8,6 +9,8 @@ import { MainService } from '../main.service';
   styleUrls: ['./venue-table.component.scss']
 })
 export class VenueTableComponent implements OnInit {
+	@ViewChild('map') mapElement: any;
+
 	venue: VenueInfo;
 	Header = ['Address','City','Phone Number','Open Hours','General Rule','Child Rule'];
 	isDisplayed:boolean[] = [false,false,false,false,false,false];
@@ -25,6 +28,16 @@ export class VenueTableComponent implements OnInit {
 			return false;
 		}
 		return true;
+	}
+	initMap() {
+		 this.service.findGeoLocation(this.venue.address).subscribe(geo => {
+			 if (geo !== null) {
+				 let map = new google.maps.Map(
+					 this.mapElement.nativeElement, {center: new google.maps.LatLng(geo.lat, geo.lng), zoom:15});
+				 // The marker, positioned at Uluru
+				 let marker = new google.maps.Marker({position: new google.maps.LatLng(geo.lat, geo.lng), map: map});
+			 } 
+		 })	
 	}
 	ngOnInit() {
 		this.venue = new VenueInfo();
@@ -48,6 +61,7 @@ export class VenueTableComponent implements OnInit {
 					if (currVenue.generalInfo.childRule !== undefined) this.venue.child = currVenue.generalInfo.childRule;
 				} 
 			}
+			this.initMap();
 		}
 		this.service.selection.changed.subscribe(changed => {
 			if (!this.service.selection.isEmpty()) {
@@ -70,6 +84,7 @@ export class VenueTableComponent implements OnInit {
 						if (currVenue.generalInfo.childRule !== undefined) this.venue.child = currVenue.generalInfo.childRule;
 					}
 				}
+				this.initMap();
 			}
 		})
 	}

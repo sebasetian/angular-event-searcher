@@ -55,6 +55,4 @@ export class ArtistDetailTableComponent implements OnInit {
 	ngOnInit() {
 		this.ArtistName = this.currArtist.name;
 	}
-
-
 }
