@@ -15,11 +15,7 @@ export class FavoriteTableComponent implements OnInit {
 	selection = new SelectionModel<SearchEvents>(false, []);
 
 	highlightRow(row) {
-		if (this.selection.isSelected(row)) {
-			this.selection.deselect(row);
-		} else {
-			this.selection.select(row);
-		}
+		this.selection.toggle(row);
 	}
 	removeFavorite(event) {
 		this.service.favoriteList.deselect(event);
