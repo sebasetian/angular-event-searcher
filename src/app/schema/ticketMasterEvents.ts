@@ -1,5 +1,15 @@
 import { Self } from "@angular/core";
-
+export class DetailEvents {
+	Artist?: string = ""; 
+	Venue?: string = "";
+	Date?: string = "";
+	Time?: string = "";
+	Category?: string = "";
+	Price?:string = "";
+	Status?:string = "";
+	BuyTicketUrl?:string = "";
+	SeatMapUrl?:string = "";
+}
 export class SearchEvents {
 	name: string;
 	type: string;
@@ -14,11 +24,11 @@ export class SearchEvents {
 	promoter: promoter;
 	promoters: promoter[];
 	priceRanges: priceRange[];
-	seatMap: seatMap;
+	seatmap: seatmap;
 	_links: links;
 	_embedded: embeddedVenues;
 }
-export class autocompEvents {
+export class AutocompEvents {
 	name: string;
 	type: string;
 	url: string;
@@ -99,7 +109,7 @@ class priceRange {
 	min: number;
 	max: number;
 }
-class seatMap {
+class seatmap {
 	staticUrl: string;
 }
 class embeddedVenues {
@@ -115,6 +125,8 @@ class venues extends SearchEvents {
 	address: address;
 	location: location;
 	markets: market[];
+	generalInfo: generalInfo;
+	boxOfficeInfo:boxOfficeInfo;
 }
 class attractions extends SearchEvents {
 	aliases: string[];
@@ -138,4 +150,12 @@ class location {
 }
 class market {
 	id: string;
+}
+class generalInfo {
+	generalRule:string;
+	childRule:string;
+}
+class boxOfficeInfo {
+	openHoursDetail:string;
+	phoneNumberDetail:string;
 }

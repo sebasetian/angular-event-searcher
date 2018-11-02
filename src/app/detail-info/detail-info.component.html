@@ -12,19 +12,19 @@
 	</div>
 </div>
 <ngb-tabset class="tabset1">
-	<ngb-tab title="Event">
+	<ngb-tab class="detailTab" title="Event">
 		<ng-template ngbTabContent>
-			<p>Event</p>
+			<event-detail-table></event-detail-table>
 		</ng-template>
 	</ngb-tab>
 	<ngb-tab title="Artists/Teams">
 		<ng-template ngbTabContent>
-			<p>Artists</p>
+			<artist-detail-table-wrapper></artist-detail-table-wrapper>
 		</ng-template>
 	</ngb-tab>
 	<ngb-tab title="Venue">
 		<ng-template ngbTabContent>
-			<p>Venue</p>
+			<venue-table></venue-table>
 		</ng-template>
 	</ngb-tab>
 	<ngb-tab title="Upcoming Event">

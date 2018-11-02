@@ -1,0 +1,27 @@
+<h3>{{venue.name}}</h3>
+<table>
+	<tr [ngClass]="{'odd-child': countRow(0,venue.address)}">
+		<th *ngIf="venue.address !== ''">{{Header[0]}}</th>
+		<td *ngIf="venue.address !== ''">{{venue.address}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(1,venue.city)}">
+		<th *ngIf="venue.city !== ''">{{Header[1]}}</th>
+		<td *ngIf="venue.city !== ''">{{venue.city}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(2,venue.phone)}">
+		<th *ngIf="venue.phone !== ''">{{Header[2]}}</th>
+		<td *ngIf="venue.phone !== ''">{{venue.phone}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(3,venue.open)}">
+		<th *ngIf="venue.open !== ''">{{Header[3]}}</th>
+		<td *ngIf="venue.open !== ''">{{venue.open}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(4,venue.rule)}">
+		<th *ngIf="venue.rule !== ''">{{Header[4]}}</th>
+		<td *ngIf="venue.rule !== ''">{{venue.rule}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(5,venue.child)}">
+		<th *ngIf="venue.child !== ''">{{Header[5]}}</th>
+		<td *ngIf="venue.child !== ''">{{venue.child}}</td>
+	</tr>
+</table>

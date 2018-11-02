@@ -22,6 +22,12 @@ export class DetailInfoComponent implements OnInit {
 		this.service.selection.changed.subscribe(event => {
 			this.event = event.source.selected[0];
 			this.eventName = this.event == null? 'null' : this.event.name;
+			if (this.event !== undefined && this.event._embedded !== undefined) {
+				this.service.artistList.clear();
+				for (let i = 0; i < this.event._embedded.attractions.length; i++) {
+					this.service.findArtist(this.event._embedded.attractions[i].name, this.event.classifications[0].segment.name);
+				}
+			}
 		});
 	}
 

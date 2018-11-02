@@ -1,0 +1,30 @@
+<h3>{{ArtistName}}</h3>
+<table *ngIf='currArtist.segment === "Music"'>
+	<tr [ngClass]="{'odd-child': countRow(0,currArtist.name)}">
+		<th *ngIf="currArtist.name !== ''">{{Header[0]}}</th>
+		<td *ngIf="currArtist.name !== ''">{{currArtist.name}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(1,currArtist.followers)}">
+		<th *ngIf="currArtist.followers !== ''">{{Header[1]}}</th>
+		<td *ngIf="currArtist.followers !== ''">{{currArtist.followers.total | number:'5.0-0'}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(2,currArtist.populartiy)}">
+		<th *ngIf="currArtist.populartiy !== ''">{{Header[2]}}</th>
+		<td *ngIf="currArtist.populartiy !== ''">
+			<round-progress 
+			[current]="currArtist.popularity" 
+			[max]="100"
+			[radius]="30"
+			[stroke]="5">
+			</round-progress></td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(3,currArtist.external_urls)}">
+		<th *ngIf="currArtist.external_urls !== ''">{{Header[3]}}</th>
+		<td *ngIf="currArtist.external_urls !== ''"><a [href]='currArtist.external_urls.spotify'>Spotify</a></td>
+	</tr>
+</table>
+<mat-grid-list cols="3">
+	<mat-grid-tile *ngFor="let img of currArtist.imgList">
+		<img [src]="img.link">
+	</mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,34 @@
+<table>
+	<tr [ngClass]="{'odd-child': countRow(0,currEvent.Artist)}">
+		<th *ngIf="currEvent.Artist !== ''">{{Header[0]}}</th>
+		<td *ngIf="currEvent.Artist !== ''">{{currEvent.Artist}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(1,currEvent.Venue)}">
+		<th *ngIf="currEvent.Venue !== ''">{{Header[1]}}</th>
+		<td *ngIf="currEvent.Venue !== ''">{{currEvent.Venue}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(2,currEvent.Date)}">
+		<th *ngIf="currEvent.Date !== ''">{{Header[2]}}</th>
+		<td *ngIf="currEvent.Date !== ''">{{currEvent.Date | date:"mediumDate"}} {{currEvent.Time}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(3,currEvent.Category)}">
+		<th *ngIf="currEvent.Category !== ''">{{Header[3]}}</th>
+		<td *ngIf="currEvent.Category !== ''">{{currEvent.Category}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(4,currEvent.Price)}">
+		<th *ngIf="currEvent.Price !== ''">{{Header[4]}}</th>
+		<td *ngIf="currEvent.Price !== ''">{{currEvent.Price}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(5,currEvent.Status)}">
+		<th *ngIf="currEvent.Status !== ''">{{Header[5]}}</th>
+		<td *ngIf="currEvent.Status !== ''">{{currEvent.Status}}</td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(6,currEvent.BuyTicketUrl)}">
+		<th *ngIf="currEvent.BuyTicketUrl !== ''">{{Header[6]}}</th>
+		<td *ngIf="currEvent.BuyTicketUrl !== ''"><a [href]="currEvent.BuyTicketUrl">Ticketmaster</a></td>
+	</tr>
+	<tr [ngClass]="{'odd-child': countRow(7,currEvent.SeatMapUrl)}">
+		<th *ngIf="currEvent.SeatMapUrl !== ''">{{Header[7]}}</th>
+		<td *ngIf="currEvent.SeatMapUrl !== ''"><a [href]="currEvent.SeatMapUrl">View Seat Map Here</a></td>
+	</tr>
+</table>

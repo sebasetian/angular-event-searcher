@@ -7,6 +7,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HttpClientModule } from '@angular/common/http';
 import { PropagationStopModule } from 'ngx-propagation-stop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { MainComponent } from './main.component';
 import { ResultComponent } from './result/result.component';
@@ -15,6 +19,11 @@ import { FavoriteTableComponent } from './favorite-table/favorite-table.componen
 import { DetailInfoComponent } from './detail-info/detail-info.component';
 
 import { MainService } from './main.service';
+import { EventDetailTableComponent } from './event-detail-table/event-detail-table.component';
+import { ArtistDetailTableComponent } from './artist-detail-table/artist-detail-table.component';
+import { ArtistDetailTableWrapperComponent } from './artist-detail-table-wrapper/artist-detail-table-wrapper.component';
+import { DecimalPipe } from '@angular/common';
+import { VenueTableComponent } from './venue-table/venue-table.component';
 
 @NgModule({
 	declarations: [
@@ -22,7 +31,11 @@ import { MainService } from './main.service';
 		ResultComponent,
 		SlideComponent,
 		FavoriteTableComponent,
-		DetailInfoComponent
+		DetailInfoComponent,
+		EventDetailTableComponent,
+		ArtistDetailTableComponent,
+		ArtistDetailTableWrapperComponent,
+		VenueTableComponent
 	],
 	imports: [
 		FormsModule,
@@ -38,9 +51,16 @@ import { MainService } from './main.service';
 		ReactiveFormsModule,
 		HttpClientModule, 
 		PropagationStopModule,
-		NgbModule
+		NgbModule,
+		MatDividerModule,
+		MatListModule,
+		RoundProgressModule,
+		MatGridListModule
 	],
-	providers: [MainService],
+	providers: [MainService,DecimalPipe],
+	entryComponents: [
+		ArtistDetailTableComponent
+	],
 	bootstrap: [MainComponent]
 })
 export class EntryModule { }

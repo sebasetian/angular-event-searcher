@@ -21,11 +21,8 @@ export class ResultComponent implements OnInit {
 		this.service.currPane = PaneType.detailPane;
 	}
 	highlightRow(row) {
-		if (this.service.selection.isSelected(row)) {
-			this.service.selection.deselect(row);
-		} else {
-			this.service.selection.select(row);
-		}
+		this.service.selection.toggle(row);
+		console.log(row);
 	}
 	ngOnInit() {
 		this.service.currEvents.subscribe(events => {

@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
 	public submitted: boolean = false;
 	
 	submitForm() {
+		this.clearAll();
 		this.service.postForm(this.form);
 		this.submitted = true;
 	}
@@ -36,8 +37,6 @@ export class MainComponent implements OnInit {
 		
 	}
 	ngOnInit(): void {
-		//Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-		//Add 'implements OnInit' to the class.
 		this.eventForm = new FormGroup({
 			'keyword': new FormControl(this.form.keyword, Validators.required),
 			'category': new FormControl(this.form.category),
