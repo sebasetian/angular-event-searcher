@@ -1,3 +1,20 @@
-<p>
-  upcoming-events works!
-</p>
+<div class="row">
+	<select [(ngModel)]="currRanking" name="ranking" id="ranking" (change)="sortData()">
+		<option *ngFor="let ranking of rankings" [value]="ranking"> {{ranking}}</option>
+	</select>
+	<select [(ngModel)]="currOrder" name="order" id="order" (change)="sortData()">
+		<option *ngFor="let order of orders" [value]="order"> {{order}}</option>
+	</select>
+</div>
+<table class="table">
+	<tr *ngFor="let event of service.sortedData; let i = index">
+		<mat-card *ngIf='shouldShow(i,showMore)'[@zoomInDownOnEnter] [@zoomOutUpOnLeave] [ngClass]="{'card':shouldShow(i,showMore)}" >
+			<mat-card-content class="text">
+				<a [href]="event.url"><p class="mid-text">{{event.name}}</p></a>
+				<p class="mid-text"><span *ngIf='event.artist!==""' class="orange">Artist: {{event.artist}} </span> <span class="gray">{{event.date | date:"mediumDate"}} {{event.time}}</span></p>
+				<p>Type: {{event.type}}</p>
+			</mat-card-content>
+		</mat-card>
+	</tr>
+</table>
+<button type="button" (click)="showSwitch()" class="btn btn-primary">{{showMoreOrLess}}</button>

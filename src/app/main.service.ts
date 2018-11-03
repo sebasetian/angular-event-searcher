@@ -7,7 +7,7 @@ import { Observable, EMPTY, Subject,of} from 'rxjs';
 import { ipApiJson, GeoCoding } from './schema/geo';
 import { PaneType } from './pane-type.enum'
 import { SelectionModel } from '@angular/cdk/collections';
-import { ArtistInfo, CustomSearchImg } from './schema/ArtistTeamInfo';
+import { ArtistInfo, CustomSearchImg, VenueInfo, UpcomingEvent, SongkickVenueInfo, SongkickEvent } from './schema/ArtistTeamInfo';
 @Injectable({
 	providedIn: 'root',
 })
@@ -18,14 +18,21 @@ export class MainService {
 	urlSpotify: string;
 	urlGoogleImgSearch: string;
 	urlGeoCoding:string;
+	urlFindVenueId:string;
+	urlFindVenueUpcomingEvnet:string;
 	formObserable: Observable<formField>;
 	currPane: PaneType;
 	favoriteList = new SelectionModel<SearchEvents>(true, []);
 	selection = new SelectionModel<SearchEvents>(false, []);
 	artistList = new SelectionModel<ArtistInfo>(true,[]);
-	
+	upcomingEvents: UpcomingEvent[];
+	sortedData: UpcomingEvent[];
+	venue: VenueInfo;
+
 	private eventSource = new Subject<SearchEvents[]>();
 	currEvents = this.eventSource.asObservable();
+	private SongkickSource = new Subject<UpcomingEvent[]>();
+	currSougkickEvent = this.SongkickSource.asObservable();
 	constructor(private http: HttpClient) {
 		this.urlAutoComplete ='/auto-complete/';
 		this.urlForm = '/form/';
@@ -33,6 +40,55 @@ export class MainService {
 		this.urlSpotify = '/spotify/';
 		this.urlGoogleImgSearch = '/img-search/';
 		this.urlGeoCoding = '/geo/';
+		this.urlFindVenueId = '/find-venue-id/';
+		this.urlFindVenueUpcomingEvnet = '/find-venue-upcoming-event/';
+	}
+	initVenue() {
+		let event = this.selection.selected[0];
+		if (event._embedded.venues !== undefined && event._embedded.venues.length > 0) {
+			let currVenue = event._embedded.venues[0];
+			this.venue.name = currVenue.name;
+			if (currVenue.address !== undefined) this.venue.address = currVenue.address.line1;
+			this.venue.city = "";
+			if (currVenue.city !== undefined && currVenue.state !== undefined) this.venue.city = currVenue.city.name + ',' + currVenue.state.name;
+			else if (currVenue.city !== undefined) this.venue.city = currVenue.city.name;
+			else if (currVenue.state !== undefined) this.venue.city = currVenue.state.name;
+
+			if (currVenue.boxOfficeInfo !== undefined) {
+				if (currVenue.boxOfficeInfo.phoneNumberDetail !== undefined) this.venue.phone = currVenue.boxOfficeInfo.phoneNumberDetail;
+				if (currVenue.boxOfficeInfo.openHoursDetail !== undefined) this.venue.open = currVenue.boxOfficeInfo.openHoursDetail;
+			}
+
+			if (currVenue.generalInfo !== undefined) {
+				if (currVenue.generalInfo.generalRule !== undefined) this.venue.rule = currVenue.generalInfo.generalRule;
+				if (currVenue.generalInfo.childRule !== undefined) this.venue.child = currVenue.generalInfo.childRule;
+			}
+		}
+	}
+	findUpcomingEvents(name) {
+		this.http.get<SongkickVenueInfo[]>(this.urlFindVenueId + name).pipe(switchMap(venues => {
+			let id: number = -1;
+			for (let i = 0; i < venues.length; i++) {
+				if (venues[i].displayName.toLowerCase === name.toLowerCase) {
+					id = venues[i].id;
+					break;
+				}
+			}
+			return this.http.get<SongkickEvent[]>(this.urlFindVenueUpcomingEvnet + id)
+		})).subscribe(events => {
+			let ret: UpcomingEvent[] = [];
+			events.forEach(event => {
+				let upcomingEvent = new UpcomingEvent();
+				upcomingEvent.name = event.displayName;
+				upcomingEvent.type = event.type;
+				upcomingEvent.artist = event.performance.length > 0? event.performance[0].displayName: "";
+				upcomingEvent.date = event.start.date !== undefined ? event.start.date: "";
+				upcomingEvent.time = event.start.time !== undefined ? event.start.time: "";
+				upcomingEvent.url = event.uri;
+				ret.push(upcomingEvent);
+			});
+			this.SongkickSource.next(ret);
+		});
 	}
 	findGeoLocation(address) {
 		return this.http.get<GeoCoding>(this.urlGeoCoding + address);

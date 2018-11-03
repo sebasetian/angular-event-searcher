@@ -11,20 +11,19 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 import { MainComponent } from './main.component';
 import { ResultComponent } from './result/result.component';
 import { SlideComponent } from './slide/slide.component';
 import { FavoriteTableComponent } from './favorite-table/favorite-table.component';
 import { DetailInfoComponent } from './detail-info/detail-info.component';
-
 import { MainService } from './main.service';
 import { EventDetailTableComponent } from './event-detail-table/event-detail-table.component';
 import { ArtistDetailTableComponent } from './artist-detail-table/artist-detail-table.component';
 import { ArtistDetailTableWrapperComponent } from './artist-detail-table-wrapper/artist-detail-table-wrapper.component';
 import { DecimalPipe } from '@angular/common';
 import { VenueTableComponent } from './venue-table/venue-table.component';
-import { FirstFormComponent } from './firstform/firstform.component';
 import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.component'
 @NgModule({
 	declarations: [
@@ -37,7 +36,6 @@ import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.compo
 		ArtistDetailTableComponent,
 		ArtistDetailTableWrapperComponent,
 		VenueTableComponent,
-		FirstFormComponent,
 		UpcomingEventsComponent
 	],
 	imports: [
@@ -58,7 +56,8 @@ import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.compo
 		MatDividerModule,
 		MatListModule,
 		RoundProgressModule,
-		MatGridListModule
+		MatGridListModule,
+		MatCardModule
 	],
 	providers: [MainService,DecimalPipe],
 	entryComponents: [

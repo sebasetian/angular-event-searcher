@@ -24,6 +24,16 @@ export class ResultComponent implements OnInit {
 		this.service.selection.toggle(row);
 	}
 	ngOnInit() {
+		this.service.selection.changed.subscribe(changed => {
+			if (!this.service.selection.isEmpty()) {
+				this.service.initVenue();
+				this.service.findUpcomingEvents(this.service.venue.name);
+				this.service.currSougkickEvent.subscribe(events => {
+					this.service.upcomingEvents = events;
+					this.service.sortedData = this.service.upcomingEvents.slice();
+				});
+			}
+		})
 		this.service.currEvents.subscribe(events => {
 			if (events != null && events[0].name != undefined) {
 				this.searchEvents = events;

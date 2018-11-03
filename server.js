@@ -28,21 +28,15 @@ app.get('/spotify/:name', (req,res) => {
 			res.send(response.body.artists.items);
 		})
 		.catch(err => {
-			console.log("error!");
-			if (res.statusCode == 401) {
-				spotifyApi.clientCredentialsGrant().then(
-					function (data) {
-						spotifyApi.setAccessToken(data.body['access_token']);
-						spotifyApi.searchArtists(req.params.name)
-							.then(artists => {
-								console.log(artists);
-								res.send(artists.items);
-							})
-					},
-					function (err) {
-					}
-				);
-			}
+			spotifyApi.clientCredentialsGrant().then(
+				function (data) {
+					spotifyApi.setAccessToken(data.body['access_token']);
+					spotifyApi.searchArtists(req.params.name)
+						.then(response => {
+							res.send(response.body.artists.items);
+						})
+				}
+			);
 		})
 })
 app.get('/auto-complete/:name',(req,res) => {
@@ -83,6 +77,28 @@ app.get('/geo/:name', (req,res) => {
 	.then (geolocation => {
 		if (geolocation.data.results.length > 0) {
 			res.send(geolocation.data.results[0].geometry.location);
+		} else {
+			res.send("");
+		}
+	})
+})
+app.get('/find-venue-id/:name', (req,res) => {
+	axios.get('https://api.songkick.com/api/3.0/search/venues.json?query=' + req.params.name +'&apikey=uVD27vJiXMdv5xMH')
+	.then (venueInfo => {
+		let results = venueInfo.data.resultsPage.results;
+		if (results.venue !== undefined) {
+			res.send(results.venue);
+		} else {
+			res.send("");
+		}
+	})
+})
+app.get('/find-venue-upcoming-event/:id', (req,res) => {
+	axios.get('https://api.songkick.com/api/3.0/venues/' + req.params.id +'/calendar.json?apikey=uVD27vJiXMdv5xMH')
+	.then (events => {
+		let results = events.data.resultsPage.results;
+		if (results.event !== undefined) {
+			res.send(results.event);
 		} else {
 			res.send("");
 		}

@@ -10,8 +10,6 @@ import { MainService } from '../main.service';
 })
 export class VenueTableComponent implements OnInit {
 	@ViewChild('map') mapElement: any;
-
-	venue: VenueInfo;
 	Header = ['Address','City','Phone Number','Open Hours','General Rule','Child Rule'];
 	isDisplayed:boolean[] = [false,false,false,false,false,false];
 	constructor(private service:MainService) { }
@@ -30,7 +28,7 @@ export class VenueTableComponent implements OnInit {
 		return true;
 	}
 	initMap() {
-		 this.service.findGeoLocation(this.venue.address).subscribe(geo => {
+		 this.service.findGeoLocation(this.service.venue.address).subscribe(geo => {
 			 if (geo !== null) {
 				 let map = new google.maps.Map(
 					 this.mapElement.nativeElement, {center: new google.maps.LatLng(geo.lat, geo.lng), zoom:15});
@@ -40,50 +38,14 @@ export class VenueTableComponent implements OnInit {
 		 })	
 	}
 	ngOnInit() {
-		this.venue = new VenueInfo();
+		this.service.venue = new VenueInfo();
 		if(!this.service.selection.isEmpty()) {
-			let event = this.service.selection.selected[0];
-			if (event._embedded.venues !== undefined && event._embedded.venues.length > 0) {
-				let currVenue = event._embedded.venues[0];
-				if (currVenue.address !== undefined) this.venue.address = currVenue.address.line1;
-				this.venue.city = "";
-				if (currVenue.city !== undefined && currVenue.state !== undefined) this.venue.city = currVenue.city.name + ',' + currVenue.state.name;
-				else if (currVenue.city !== undefined) this.venue.city = currVenue.city.name;
-				else if (currVenue.state !== undefined) this.venue.city = currVenue.state.name;
-
-				if (currVenue.boxOfficeInfo !== undefined) {
-					if (currVenue.boxOfficeInfo.phoneNumberDetail !== undefined) this.venue.phone = currVenue.boxOfficeInfo.phoneNumberDetail;
-					if (currVenue.boxOfficeInfo.openHoursDetail !== undefined) this.venue.open = currVenue.boxOfficeInfo.openHoursDetail;
-				}
-
-				if (currVenue.generalInfo !== undefined) {
-					if (currVenue.generalInfo.generalRule !== undefined) this.venue.rule = currVenue.generalInfo.generalRule;
-					if (currVenue.generalInfo.childRule !== undefined) this.venue.child = currVenue.generalInfo.childRule;
-				} 
-			}
+			this.service.initVenue();
 			this.initMap();
 		}
 		this.service.selection.changed.subscribe(changed => {
 			if (!this.service.selection.isEmpty()) {
-				let event = this.service.selection.selected[0];
-				if (event._embedded.venues !== undefined && event._embedded.venues.length > 0) {
-					let currVenue = event._embedded.venues[0];
-					if (currVenue.address !== undefined) this.venue.address = currVenue.address.line1;
-					this.venue.city = "";
-					if (currVenue.city !== undefined && currVenue.state !== undefined) this.venue.city = currVenue.city.name + ',' + currVenue.state.name;
-					else if (currVenue.city !== undefined) this.venue.city = currVenue.city.name;
-					else if (currVenue.state !== undefined) this.venue.city = currVenue.state.name;
-
-					if (currVenue.boxOfficeInfo !== undefined) {
-						if (currVenue.boxOfficeInfo.phoneNumberDetail !== undefined) this.venue.phone = currVenue.boxOfficeInfo.phoneNumberDetail;
-						if (currVenue.boxOfficeInfo.openHoursDetail !== undefined) this.venue.open = currVenue.boxOfficeInfo.openHoursDetail;
-					}
-
-					if (currVenue.generalInfo !== undefined) {
-						if (currVenue.generalInfo.generalRule !== undefined) this.venue.rule = currVenue.generalInfo.generalRule;
-						if (currVenue.generalInfo.childRule !== undefined) this.venue.child = currVenue.generalInfo.childRule;
-					}
-				}
+				this.service.initVenue();
 				this.initMap();
 			}
 		})

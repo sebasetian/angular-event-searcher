@@ -3,6 +3,7 @@ import { MainService } from '../main.service';
 import { SearchEvents } from '../schema/ticketMasterEvents';
 import { PaneType } from '../pane-type.enum';
 import { NgbTabsetConfig } from '@ng-bootstrap/ng-bootstrap';
+import { VenueInfo } from '../schema/ArtistTeamInfo';
 @Component({
 	selector: 'detail-info',
 	templateUrl: './detail-info.component.html',
@@ -19,6 +20,11 @@ export class DetailInfoComponent implements OnInit {
 		this.service.currPane = PaneType.resPane;
 	}
 	ngOnInit() {
+		this.service.venue = new VenueInfo();
+		if (!this.service.selection.isEmpty()) {
+			this.service.initVenue();
+			this.service.findUpcomingEvents(this.service.venue.name);
+		}
 		this.service.selection.changed.subscribe(event => {
 			this.event = event.source.selected[0];
 			this.eventName = this.event == null? 'null' : this.event.name;

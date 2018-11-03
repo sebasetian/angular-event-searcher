@@ -1,28 +1,28 @@
-<h3>{{venue.name}}</h3>
+<h3>{{service.venue.name}}</h3>
 <table>
-	<tr [ngClass]="{'odd-child': countRow(0,venue.address)}">
-		<th *ngIf="venue.address !== ''">{{Header[0]}}</th>
-		<td *ngIf="venue.address !== ''">{{venue.address}}</td>
+	<tr [ngClass]="{'odd-child': countRow(0,service.venue.address)}">
+		<th *ngIf="service.venue.address !== ''">{{Header[0]}}</th>
+		<td *ngIf="service.venue.address !== ''">{{service.venue.address}}</td>
 	</tr>
-	<tr [ngClass]="{'odd-child': countRow(1,venue.city)}">
-		<th *ngIf="venue.city !== ''">{{Header[1]}}</th>
-		<td *ngIf="venue.city !== ''">{{venue.city}}</td>
+	<tr [ngClass]="{'odd-child': countRow(1,service.venue.city)}">
+		<th *ngIf="service.venue.city !== ''">{{Header[1]}}</th>
+		<td *ngIf="service.venue.city !== ''">{{service.venue.city}}</td>
 	</tr>
-	<tr [ngClass]="{'odd-child': countRow(2,venue.phone)}">
-		<th *ngIf="venue.phone !== ''">{{Header[2]}}</th>
-		<td *ngIf="venue.phone !== ''">{{venue.phone}}</td>
+	<tr [ngClass]="{'odd-child': countRow(2,service.venue.phone)}">
+		<th *ngIf="service.venue.phone !== ''">{{Header[2]}}</th>
+		<td *ngIf="service.venue.phone !== ''">{{service.venue.phone}}</td>
 	</tr>
-	<tr [ngClass]="{'odd-child': countRow(3,venue.open)}">
-		<th *ngIf="venue.open !== ''">{{Header[3]}}</th>
-		<td *ngIf="venue.open !== ''">{{venue.open}}</td>
+	<tr [ngClass]="{'odd-child': countRow(3,service.venue.open)}">
+		<th *ngIf="service.venue.open !== ''">{{Header[3]}}</th>
+		<td *ngIf="service.venue.open !== ''">{{service.venue.open}}</td>
 	</tr>
-	<tr [ngClass]="{'odd-child': countRow(4,venue.rule)}">
-		<th *ngIf="venue.rule !== ''">{{Header[4]}}</th>
-		<td *ngIf="venue.rule !== ''">{{venue.rule}}</td>
+	<tr [ngClass]="{'odd-child': countRow(4,service.venue.rule)}">
+		<th *ngIf="service.venue.rule !== ''">{{Header[4]}}</th>
+		<td *ngIf="service.venue.rule !== ''">{{service.venue.rule}}</td>
 	</tr>
-	<tr [ngClass]="{'odd-child': countRow(5,venue.child)}">
-		<th *ngIf="venue.child !== ''">{{Header[5]}}</th>
-		<td *ngIf="venue.child !== ''">{{venue.child}}</td>
+	<tr [ngClass]="{'odd-child': countRow(5,service.venue.child)}">
+		<th *ngIf="service.venue.child !== ''">{{Header[5]}}</th>
+		<td *ngIf="service.venue.child !== ''">{{service.venue.child}}</td>
 	</tr>
 </table>
 <div #map class="gMap"></div>
