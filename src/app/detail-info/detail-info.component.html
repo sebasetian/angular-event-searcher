@@ -2,7 +2,8 @@
 <div class='buttons'>
 	<button type="button" class="border retButton" (click)="showList()"><i class="material-icons">keyboard_arrow_left</i>List</button>
 	<div class='otherButtons'>
-			<div><img src="http://csci571.com/hw/hw8/Images/Twitter.png" class="twitter"></div>
+			<a [href]="twitterUrl">
+					<img src="http://csci571.com/hw/hw8/Images/Twitter.png" class="twitter"></a>
 			<div class="favorite" propagationStop (click)="service.changeFavorite(event)"><i class="material-icons border" *ngIf="!service.favoriteList.isSelected(event)">
 					star_border
 				</i><i class="material-icons yellow border" *ngIf="service.favoriteList.isSelected(event)">

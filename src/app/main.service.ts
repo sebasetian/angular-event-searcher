@@ -44,6 +44,7 @@ export class MainService {
 		this.urlFindVenueUpcomingEvnet = '/find-venue-upcoming-event/';
 	}
 	initVenue() {
+		this.venue = new VenueInfo();
 		let event = this.selection.selected[0];
 		if (event._embedded.venues !== undefined && event._embedded.venues.length > 0) {
 			let currVenue = event._embedded.venues[0];

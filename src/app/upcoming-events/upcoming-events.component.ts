@@ -1,31 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../main.service';
 import { VenueInfo, UpcomingEvent } from '../schema/ArtistTeamInfo';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, state, style, transition, animate, AnimationEvent } from '@angular/animations';
 import { zoomInDownOnEnterAnimation,zoomOutUpOnLeaveAnimation } from 'angular-animations';
 @Component({
   selector: 'upcoming-events',
   templateUrl: './upcoming-events.component.html',
   styleUrls: ['./upcoming-events.component.scss'],
 	animations: [
-		zoomInDownOnEnterAnimation(),
-		zoomOutUpOnLeaveAnimation(),
-		trigger('fadeinout', [
-			// ...
-			state('showed', style({
-				transform: 'scale(1.0)'
-			})),
-			state('notShowed', style({
-				padding:0,
-				margin:0,
-				transform: 'scale(0.0)'
-			})),
-			transition('showed => notShowed', [
-				animate('0.5s ease-in')
-			]),
-			transition('notshowed => Showed', [
-				animate('0.5s ease-out')
-			])
+		trigger('fadeinout', [state('show',style({})),state('notShow',style({})),
+			transition(':enter', [style({ height: 0, overflow: 'hidden' }), animate('.3s ease-in-out', style({ height: '*', overflow: 'hidden' }))]),
+			transition(':leave', [style({ height: '*', overflow: 'hidden' }), animate('.3s ease-in-out', style({ height: 0, overflow: 'hidden' }))])
 		]),
 	]
 })
@@ -36,6 +21,7 @@ export class UpcomingEventsComponent implements OnInit {
 	currRanking:string;
 	currOrder:string;
 	showMore:boolean;
+	isAniDisabled:boolean;
 	showMoreOrLess:string;
 	constructor(private service: MainService) { }
 	shouldShow(index:number,showMore:boolean):boolean {
@@ -46,6 +32,7 @@ export class UpcomingEventsComponent implements OnInit {
 		this.currOrder = 'Ascending';
 		this.showMore = false;
 		this.showMoreOrLess = 'Show More';
+		this.isAniDisabled = true;
 		this.service.selection.changed.subscribe(changed => {
 			if (!this.service.selection.isEmpty()) {
 				this.service.initVenue();
@@ -55,13 +42,15 @@ export class UpcomingEventsComponent implements OnInit {
 			this.currOrder = 'Ascending';
 			this.showMore = false;
 			this.showMoreOrLess = 'Show More';
+			this.isAniDisabled = true;
 		})
 
 	}
 	sortData() {
+		this.isAniDisabled = true;
 		const data = this.service.sortedData.slice();
 		if (this.currRanking === 'Default') {
-			this.service.sortedData = data;
+			this.service.sortedData = this.service.upcomingEvents.slice();
 			return;
 		}
 		this.service.sortedData = data.sort((a, b) => {
@@ -84,8 +73,9 @@ export class UpcomingEventsComponent implements OnInit {
 		return (a > b? 1: -1) * (isAsc ? 1 : -1);
 	}
 	showSwitch() {
+		this.isAniDisabled = false;
 		this.showMore = !this.showMore;
-		if (this.showMore) {
+		if (!this.showMore) {
 			this.showMoreOrLess = 'Show Less';
 		} else {
 			this.showMoreOrLess = 'Show More';
