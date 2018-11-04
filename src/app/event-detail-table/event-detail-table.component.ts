@@ -16,7 +16,7 @@ export class EventDetailTableComponent implements OnInit {
 	currEvent: DetailEvents = new DetailEvents();
 	dataSource: DetailEvents[];
 	isDisplayed: boolean[] = [false,false,false,false,false,false,false];
-	constructor(private service: MainService,private decimalPipe:DecimalPipe) {
+	constructor(public service: MainService,private decimalPipe:DecimalPipe) {
 		this.initEvent(this.service.selection.selected[0]); 
 	}
 	initEvent(event: SearchEvents) {

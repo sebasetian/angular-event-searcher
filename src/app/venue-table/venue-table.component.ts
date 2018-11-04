@@ -12,7 +12,7 @@ export class VenueTableComponent implements OnInit {
 	@ViewChild('map') mapElement: any;
 	Header = ['Address','City','Phone Number','Open Hours','General Rule','Child Rule'];
 	isDisplayed:boolean[] = [false,false,false,false,false,false];
-	constructor(private service:MainService) { }
+	constructor(public service:MainService) { }
 	countRow(id, str) {
 		if (str === '') {
 			return false;

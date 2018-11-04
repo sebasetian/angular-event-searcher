@@ -23,7 +23,7 @@ export class UpcomingEventsComponent implements OnInit {
 	showMore:boolean;
 	isAniDisabled:boolean;
 	showMoreOrLess:string;
-	constructor(private service: MainService) { }
+	constructor(public service: MainService) { }
 	shouldShow(index:number,showMore:boolean):boolean {
 		return index < 5 || (index >= 5 && showMore);
 	}

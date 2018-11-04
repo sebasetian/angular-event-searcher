@@ -134,7 +134,7 @@ export class MainService {
 			return EMPTY;
 		}
 		return this.http.get<AutocompEvents[]>(this.urlAutoComplete + word).pipe(map(events => {
-			if (events == null) return ;
+			if (events == null) return;
 			let eventNames = events.map(event => event.name);
 			return eventNames;
 		}));

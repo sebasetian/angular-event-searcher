@@ -3,11 +3,11 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const geoHashFun = require('ngeohash');
 const SpotifyWebApi = require('spotify-web-api-node');
-
+const path = require("path");
 const app = express();
-const port = process.env.PORT || 8082;
-app.use(express.static(__dirname + '/scripts'));
-app.use(express.static(__dirname + '/dist/hw8'));
+const port = process.env.PORT || 8081;
+app.use(express.static(path.join(__dirname, 'dist/hw8')));
+app.use(express.static(__dirname));
 app.set('port', port);
 app.get('/', (req, res) => 
 	res.sendFile('index.html')
@@ -39,6 +39,10 @@ app.get('/spotify/:name', (req,res) => {
 			);
 		})
 })
+
+app.get('/auto-complete1/:name', (req, res) => {
+	res.send('work');
+});
 app.get('/auto-complete/:name',(req,res) => {
 	axios.get('https://app.ticketmaster.com/discovery/v2/suggest?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=' + req.params.name)
 		.then(events => {

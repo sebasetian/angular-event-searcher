@@ -9,7 +9,7 @@ import { SearchEvents } from '../schema/ticketMasterEvents';
 })
 export class ArtistDetailTableWrapperComponent implements OnInit {
 	idx: number = 0;
-	constructor(private resolver: ComponentFactoryResolver,private service: MainService) {
+	constructor(private resolver: ComponentFactoryResolver, public service: MainService) {
 		
 	}
 	tableRefList = [];

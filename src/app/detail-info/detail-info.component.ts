@@ -14,7 +14,7 @@ export class DetailInfoComponent implements OnInit {
 	event: SearchEvents = null;
 	eventName = 'null';
 	twitterUrl: string = "https://twitter.com/intent/tweet?text="; 
-	constructor(private service: MainService, private config: NgbTabsetConfig) {
+	constructor(public service: MainService, private config: NgbTabsetConfig) {
 		config.justify = 'end';
 	 }
 	showList() {

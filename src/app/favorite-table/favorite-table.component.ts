@@ -10,7 +10,7 @@ import { SearchEvents } from '../schema/ticketMasterEvents';
 })
 export class FavoriteTableComponent implements OnInit {
 
-	constructor(private service: MainService) { }
+	constructor(public service: MainService) { }
 	column: string[] = ['#', 'Date', 'Event', 'Category', 'Venue Info', 'Favorite'];
 	selection = new SelectionModel<SearchEvents>(false, []);
 

@@ -33,7 +33,7 @@ export class MainComponent implements OnInit {
 	showFav() {
 		this.service.currPane = PaneType.favoritePane;
 	}
-	constructor(private service: MainService) {
+	constructor(public service: MainService) {
 		
 	}
 	ngOnInit(): void {

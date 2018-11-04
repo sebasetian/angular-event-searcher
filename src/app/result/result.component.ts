@@ -11,7 +11,7 @@ import { PaneType } from '../pane-type.enum'
 })
 export class ResultComponent implements OnInit {
 	searchEvents: SearchEvents[];
-	constructor(private service: MainService) {
+	constructor(public service: MainService) {
 		this.service.currPane = PaneType.resPane;
 	}
 	column: string[] = ['#','Date','Event','Category','Venue Info','Favorite'];
