@@ -1,9 +1,12 @@
-#order {
+.disabled {
 	background-color: lightgray;
 }
-.card,.table {
+.card {
   width:100%;
   margin-top:20px;
+}
+.table {
+  margin-top:-20px;
 }
 .orange {
 	color:orange;
@@ -17,4 +20,7 @@
 }
 .mid-text {
 	margin-bottom: 0.2rem;
+}
+#order {
+	margin-left: -50px;
 }

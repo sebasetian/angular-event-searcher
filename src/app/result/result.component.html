@@ -21,7 +21,7 @@
 		
 			<ng-container matColumnDef="Event">
 				<th mat-header-cell *matHeaderCellDef> Event </th>
-				<td mat-cell propagationStop *matCellDef="let event"> <a href="#" matTooltip="{{event.name}}" (click)='jumpToDetail(event)'>{{truncateName(event.name)}}</a> </td>
+				<td mat-cell  *matCellDef="let event"> <a href="#" propagationStop matTooltip="{{event.name}}" (click)='jumpToDetail(event)'>{{truncateName(event.name)}}</a> </td>
 			</ng-container>
 		
 			<ng-container matColumnDef="Category">

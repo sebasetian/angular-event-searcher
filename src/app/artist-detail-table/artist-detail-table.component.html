@@ -6,7 +6,7 @@
 	</tr>
 	<tr [ngClass]="{'odd-child': countRow(1,currArtist.followers)}">
 		<th *ngIf="currArtist.followers !== ''">{{Header[1]}}</th>
-		<td *ngIf="currArtist.followers !== ''">{{currArtist.followers.total | number:'5.0-0'}}</td>
+		<td *ngIf="currArtist.followers !== ''">{{currArtist.followers.total | number:'1.0-0'}}</td>
 	</tr>
 	<tr [ngClass]="{'odd-child': countRow(2,currArtist.populartiy)}">
 		<th *ngIf="currArtist.populartiy !== ''">{{Header[2]}}</th>

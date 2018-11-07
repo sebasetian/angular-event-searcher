@@ -9,8 +9,8 @@ import { zoomInDownOnEnterAnimation,zoomOutUpOnLeaveAnimation } from 'angular-an
   styleUrls: ['./upcoming-events.component.scss'],
 	animations: [
 		trigger('fadeinout', [state('show',style({})),state('notShow',style({})),
-			transition(':enter', [style({ height: 0, overflow: 'hidden' }), animate('.3s ease-in-out', style({ height: '*', overflow: 'hidden' }))]),
-			transition(':leave', [style({ height: '*', overflow: 'hidden' }), animate('.3s ease-in-out', style({ height: 0, overflow: 'hidden' }))])
+			transition(':enter', [style({ height: 0, overflow: 'hidden', opacity: 0 }), animate('.3s ease-in-out', style({ height: '*', overflow: 'hidden', opacity: 1 }))]),
+			transition(':leave', [style({ height: '*', overflow: 'hidden', opacity: 1 }), animate('.3s ease-in-out', style({ height: 0, overflow: 'hidden',opacity: 0 }))])
 		]),
 	]
 })

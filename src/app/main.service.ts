@@ -77,6 +77,7 @@ export class MainService {
 	}
 	findUpcomingEvents(name) {
 		this.http.get<SongkickVenueInfo[]>(this.urlFindVenueId + name).pipe(switchMap(venues => {
+			if (venues == null) return of([]);
 			let id: number = -1;
 			for (let i = 0; i < venues.length; i++) {
 				if (venues[i].displayName.toLowerCase === name.toLowerCase) {
@@ -109,7 +110,10 @@ export class MainService {
 		this.http.get<CustomSearchImg[]>(this.urlGoogleImgSearch + name).subscribe((items: CustomSearchImg[]) => {
 			artist.imgList = items;
 		});
-		this.artistList.select(artist);
+		if (this.artistList.selected.filter(p => p.name == name).length == 0) {
+			this.artistList.select(artist);
+		}
+		
 	} 
 	findArtist(name:string, segment:string) {
 		if (segment === undefined || segment !== 'Music') { 
@@ -127,6 +131,7 @@ export class MainService {
 					}
 				}
 				if (list.length > 0) {
+					console.log('not found');
 					list[0].segment = 'Music';
 					this.findImg(name, list[0]);
 				}

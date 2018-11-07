@@ -45,11 +45,11 @@ export class EventDetailTableComponent implements OnInit {
 		} 
 		if (event.priceRanges != undefined && event.priceRanges.length > 0) {
 			if (event.priceRanges[0].max != undefined && event.priceRanges[0].min != undefined) {
-				this.currEvent.Price = this.decimalPipe.transform(event.priceRanges[0].min) + ' ~ ' + this.decimalPipe.transform(event.priceRanges[0].max) + ' ' + event.priceRanges[0].currency;
+				this.currEvent.Price = this.decimalPipe.transform(event.priceRanges[0].min, '1.2-2') + ' ~ ' + this.decimalPipe.transform(event.priceRanges[0].max, '1.2-2') + ' ' + event.priceRanges[0].currency;
 			} else if (event.priceRanges[0].min != undefined) {
-				this.currEvent.Price = this.decimalPipe.transform(event.priceRanges[0].min) + ' ' + event.priceRanges[0].currency;
+				this.currEvent.Price = this.decimalPipe.transform(event.priceRanges[0].min, '1.2-2') + ' ' + event.priceRanges[0].currency;
 			} else if (event.priceRanges[0].max != undefined) {
-				this.currEvent.Price = this.decimalPipe.transform(event.priceRanges[0].max) + ' ' + event.priceRanges[0].currency;
+				this.currEvent.Price = this.decimalPipe.transform(event.priceRanges[0].max, '1.2-2') + ' ' + event.priceRanges[0].currency;
 			} 
 		}
 		if (event.dates.status != undefined && event.dates.status.code != undefined) {
@@ -81,8 +81,8 @@ export class EventDetailTableComponent implements OnInit {
 		return true;
 	}
 	ngOnInit() {
-		this.service.selection.changed.subscribe(eventChanged => {
-			this.initEvent(eventChanged.source.selected[0]);
+		this.service.selection.changed.subscribe(changed => {
+			this.initEvent(this.service.selection.selected[0]);
 		});
 	}
 	openSeatMapModal(SeatMapUrl:string) {

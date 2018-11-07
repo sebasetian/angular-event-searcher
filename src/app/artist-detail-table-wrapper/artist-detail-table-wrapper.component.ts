@@ -26,7 +26,7 @@ export class ArtistDetailTableWrapperComponent implements OnInit {
 			if (this.tableRefList.length > 0) {
 				this.removeTables();
 			}
-			let list = changed.source.selected;
+			let list = this.service.artistList.selected;
 			for (let i = 0; i < list.length; i++) {
 				this.createTable(i);
 			}
