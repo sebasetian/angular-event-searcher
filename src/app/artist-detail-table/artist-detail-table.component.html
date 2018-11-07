@@ -11,20 +11,46 @@
 	<tr [ngClass]="{'odd-child': countRow(2,currArtist.populartiy)}">
 		<th *ngIf="currArtist.populartiy !== ''">{{Header[2]}}</th>
 		<td *ngIf="currArtist.populartiy !== ''">
-			<round-progress 
-			[current]="currArtist.popularity" 
-			[max]="100"
-			[radius]="30"
-			[stroke]="5">
-			</round-progress></td>
+			<div class="roundbarWrapper">
+				<round-progress 
+				[current]="currArtist.popularity" 
+				[max]="100"
+				[radius]="25"
+				[stroke]="4"
+				[clockwise]='false'
+				[color]="'#98BE71'">
+				</round-progress>
+				<div class='roundbarText'>{{currArtist.popularity}}</div>
+			</div>
+		</td>
 	</tr>
 	<tr [ngClass]="{'odd-child': countRow(3,currArtist.external_urls)}">
 		<th *ngIf="currArtist.external_urls !== ''">{{Header[3]}}</th>
 		<td *ngIf="currArtist.external_urls !== ''"><a [href]='currArtist.external_urls.spotify'>Spotify</a></td>
 	</tr>
 </table>
-<mat-grid-list cols="3">
-	<mat-grid-tile *ngFor="let img of currArtist.imgList">
-		<img [src]="img.link">
-	</mat-grid-tile>
-</mat-grid-list>
+<table *ngIf="currArtist != undefined && currArtist.imgList !== undefined" >
+	<tr>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[0] != undefined"><a [href]='currArtist.imgList[0].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[0].link'></a></td>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[1] != undefined"><a [href]='currArtist.imgList[1].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[1].link'></a></td>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[2] != undefined"><a [href]='currArtist.imgList[2].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[2].link'></a></td>
+	</tr>
+	<tr>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[3] != undefined"><a [href]='currArtist.imgList[3].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[3].link'></a></td>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[4] != undefined"><a [href]='currArtist.imgList[4].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[4].link'></a></td>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[5] != undefined"><a [href]='currArtist.imgList[5].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[5].link'></a></td>
+	</tr>
+	<tr>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[6] != undefined"></td>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[6] != undefined"><a [href]='currArtist.imgList[6].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[6].link'></a></td>
+		<td style='width: 33%;' *ngIf="currArtist.imgList[7] != undefined"><a [href]='currArtist.imgList[7].link'><img style='max-width: 90%;'
+				 [src]='currArtist.imgList[7].link'></a></td>
+	</tr>
+</table>

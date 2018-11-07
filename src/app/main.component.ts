@@ -59,5 +59,7 @@ export class MainComponent implements OnInit {
 				}
 				this.options = [];
 			});
-	} 
+	}
+	get keyword() { return this.eventForm.get('keyword')}; 
+	get location() { return this.eventForm.get('location') }; 
 }

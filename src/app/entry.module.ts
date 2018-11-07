@@ -12,6 +12,8 @@ import { MatListModule } from '@angular/material/list';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MainComponent } from './main.component';
 import { ResultComponent } from './result/result.component';
@@ -25,6 +27,7 @@ import { ArtistDetailTableWrapperComponent } from './artist-detail-table-wrapper
 import { DecimalPipe } from '@angular/common';
 import { VenueTableComponent } from './venue-table/venue-table.component';
 import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.component'
+import { ModalContent } from './Modal.component';
 @NgModule({
 	declarations: [
 		MainComponent,
@@ -36,7 +39,8 @@ import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.compo
 		ArtistDetailTableComponent,
 		ArtistDetailTableWrapperComponent,
 		VenueTableComponent,
-		UpcomingEventsComponent
+		UpcomingEventsComponent,
+		ModalContent
 	],
 	imports: [
 		FormsModule,
@@ -57,11 +61,14 @@ import { UpcomingEventsComponent } from './upcoming-events/upcoming-events.compo
 		MatListModule,
 		RoundProgressModule,
 		MatGridListModule,
-		MatCardModule
+		MatCardModule,
+		StorageServiceModule,
+		MatTooltipModule
 	],
 	providers: [MainService,DecimalPipe],
 	entryComponents: [
-		ArtistDetailTableComponent
+		ArtistDetailTableComponent,
+		ModalContent
 	],
 	bootstrap: [MainComponent]
 })

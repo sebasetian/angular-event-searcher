@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
 import { DetailEvents, SearchEvents } from '../schema/ticketMasterEvents';
 import { MainService } from '../main.service';
-import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
-import { ArtistInfo } from '../schema/ArtistTeamInfo';
 import { DecimalPipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalContent } from '../Modal.component';
 
 @Component({
   selector: 'event-detail-table',
@@ -16,7 +15,7 @@ export class EventDetailTableComponent implements OnInit {
 	currEvent: DetailEvents = new DetailEvents();
 	dataSource: DetailEvents[];
 	isDisplayed: boolean[] = [false,false,false,false,false,false,false];
-	constructor(public service: MainService,private decimalPipe:DecimalPipe) {
+	constructor(public service: MainService, private decimalPipe: DecimalPipe, public modalInitializer: NgbModal) {
 		this.initEvent(this.service.selection.selected[0]); 
 	}
 	initEvent(event: SearchEvents) {
@@ -86,5 +85,8 @@ export class EventDetailTableComponent implements OnInit {
 			this.initEvent(eventChanged.source.selected[0]);
 		});
 	}
-
+	openSeatMapModal(SeatMapUrl:string) {
+		const newModal = this.modalInitializer.open(ModalContent);
+		newModal.componentInstance.imgHref = SeatMapUrl;
+	}
 }

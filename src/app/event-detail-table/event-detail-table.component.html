@@ -29,6 +29,6 @@
 	</tr>
 	<tr [ngClass]="{'odd-child': countRow(7,currEvent.SeatMapUrl)}">
 		<th *ngIf="currEvent.SeatMapUrl !== ''">{{Header[7]}}</th>
-		<td *ngIf="currEvent.SeatMapUrl !== ''"><a [href]="currEvent.SeatMapUrl">View Seat Map Here</a></td>
+		<td *ngIf="currEvent.SeatMapUrl !== ''"><a href="#" (click)="openSeatMapModal(currEvent.SeatMapUrl)">View Seat Map Here</a></td>
 	</tr>
 </table>

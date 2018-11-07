@@ -1,1 +1,12 @@
-@import '../event-detail-table/event-detail-table.component.scss'
+@import '../event-detail-table/event-detail-table.component.scss';
+.roundbarWrapper {
+	position: relative;
+}
+.roundbarWrapper .roundbarText {
+	position: absolute;
+    top: 50%;
+	margin-left: 13px;
+    transform: translateY(-50%);
+    width: 100%;
+    z-index: 1;
+}

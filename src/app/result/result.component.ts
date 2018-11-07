@@ -23,6 +23,10 @@ export class ResultComponent implements OnInit {
 	highlightRow(row) {
 		this.service.selection.toggle(row);
 	}
+	jumpToDetail(event) {
+		this.highlightRow(event);
+		this.showDetail()
+	}
 	ngOnInit() {
 		this.service.selection.changed.subscribe(changed => {
 			if (!this.service.selection.isEmpty()) {
@@ -39,6 +43,16 @@ export class ResultComponent implements OnInit {
 				this.searchEvents = events;
 				this.eventData = new MatTableDataSource<SearchEvents>(this.searchEvents);
 			}
+			this.service.isResultLoading = false;
 		});
+	}
+	truncateName(name:string):string {
+		if (name == undefined) {
+			return "";
+		}
+		if (name.length < 35) {
+			return name;
+		}
+		return name.substr(0,35) + '...';
 	}
 }

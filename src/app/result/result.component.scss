@@ -5,8 +5,12 @@
 	height: 100%;   // takes parent height   
 }
 table {
-	margin-top:10px;
-	
+	margin-top:10px;	
+	width: 80%;
+}
+.bar {
+	margin: 0 auto;
+	margin-top:100px;
 	width: 80%;
 }
 .mat-row:hover {

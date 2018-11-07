@@ -40,9 +40,6 @@ app.get('/spotify/:name', (req,res) => {
 		})
 })
 
-app.get('/auto-complete1/:name', (req, res) => {
-	res.send('work');
-});
 app.get('/auto-complete/:name',(req,res) => {
 	axios.get('https://app.ticketmaster.com/discovery/v2/suggest?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=' + req.params.name)
 		.then(events => {
@@ -57,7 +54,7 @@ app.post('/form/', bodyParser.json(),(req,res) => {
 	let formField = req.body;
 	let getHashCode = geoHashFun.encode(formField.lat, formField.lng);
 	axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=faDkniVNhw8P88x5ljxBPGxEUbtD5Ulb&keyword=' + formField.keyword + getSegmentId(formField.category) + "&radius=" +
-		formField.distance + '&unit=' + formField.distanceUnit + '&geoPoint=' + getHashCode)
+		formField.distance + '&unit=' + formField.distanceUnit + '&geoPoint=' + getHashCode + '&sort=date,asc')
 		.then(events => {
 			if (events.data._embedded != undefined) {
 				res.send(events.data._embedded.events);

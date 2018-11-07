@@ -16,7 +16,7 @@ export class DetailInfoComponent implements OnInit {
 	twitterUrl: string = "https://twitter.com/intent/tweet?text="; 
 	constructor(public service: MainService, private config: NgbTabsetConfig) {
 		config.justify = 'end';
-	 }
+	}
 	showList() {
 		this.service.currPane = PaneType.resPane;
 	}
@@ -33,9 +33,7 @@ export class DetailInfoComponent implements OnInit {
 					}
 				}
 				this.twitterUrl += this.eventName + ' at ' + this.event._embedded.venues[0].name + '. Website: ' + this.event.url + '&hashtags=CSCI571EventSearch';
-
 			}
 		});
 	}
-
 }
