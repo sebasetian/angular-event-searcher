@@ -19,13 +19,25 @@ export class MainComponent implements OnInit {
 	public submitted: boolean = false;
 	
 	submitForm() {
-		this.clearAll();
+		this.submitted = false;
+		this.service.currPane = PaneType.resPane;
 		this.service.postForm(this.form);
 		this.submitted = true;
 	}
 	clearAll() {
 		this.submitted = false;
 		this.service.currPane = PaneType.resPane;
+		this.service.selection.clear();
+		this.service.artistList.clear();
+		this.form.keyword = '';
+		this.form.category = 'All';
+		this.form.distance = null;
+		this.form.distanceUnit = 'miles';
+		this.form.fromWhere ='Here';
+		this.form.lat = 0;
+		this.form.lng = 0;
+		this.eventForm.markAsUntouched();
+		this.eventForm.markAsPristine();
 	}
 	showRes() {
 		this.service.currPane = PaneType.resPane;

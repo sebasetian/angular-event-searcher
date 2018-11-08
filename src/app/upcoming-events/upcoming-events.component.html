@@ -12,7 +12,7 @@
 </div>
 <table class="table">
 	<tr [@.disabled]="isAniDisabled" *ngFor="let event of service.sortedData; let i = index">
-		<mat-card *ngIf='shouldShow(i,showMore)' [@fadeinout] [ngClass]="{'card':shouldShow(i,showMore)}" >
+		<mat-card *ngIf='shouldShow(i,isShowedMore)' [@fadeinout] [ngClass]="{'card':shouldShow(i,isShowedMore)}" >
 			<mat-card-content class="text">
 				<a [href]="event.url"><p class="mid-text">{{event.name}}</p></a>
 				<p class="mid-text"><span *ngIf='event.artist!==""' class="orange">Artist: {{event.artist}} </span> <span class="gray">{{event.date | date:"mediumDate"}} {{event.time}}</span></p>

@@ -10,3 +10,19 @@
     width: 100%;
     z-index: 1;
 }
+.photoTd{
+	width: 33%;
+}
+
+.photo {
+	max-width: 90%;
+}
+ @media (max-width: 576px) { 
+	tr {
+		width:90vw;
+	}   
+	.photoTd{
+		width: 100vw;
+		display:block;
+	}
+  }

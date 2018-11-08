@@ -29,13 +29,12 @@ export class VenueTableComponent implements OnInit {
 	}
 	initMap() {
 		 this.service.findGeoLocation(this.service.venue.address).subscribe(geo => {
-			 if (geo !== null) {
-				 let map = new google.maps.Map(
-					 this.mapElement.nativeElement, {center: new google.maps.LatLng(geo.lat, geo.lng), zoom:15});
-				 // The marker, positioned at Uluru
-				 let marker = new google.maps.Marker({position: new google.maps.LatLng(geo.lat, geo.lng), map: map});
-			 } 
-		 })	
+			if (geo !== null) {
+				let map = new google.maps.Map(
+					this.mapElement.nativeElement, {center: new google.maps.LatLng(geo.lat, geo.lng), zoom:15});
+				let marker = new google.maps.Marker({position: new google.maps.LatLng(geo.lat, geo.lng), map: map});
+			} 
+		})	
 	}
 	ngOnInit() {
 		this.service.venue = new VenueInfo();

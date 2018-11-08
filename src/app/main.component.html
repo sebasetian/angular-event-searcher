@@ -3,8 +3,8 @@
 		<h5 class="text-center font-weight-bold">Entertainment Event Ticket Search</h5>
 		<fieldset>
 		<div class="form-group row">
-			<label for="Keyword" class="col-2 col-form-label requiredField">Keyword</label>
-				<div class="col-sm-8">
+			<label for="Keyword" class="col-md-2 col-form-label requiredField">Keyword</label>
+				<div class="col-md-8">
 					<input type="text" class="form-control" placeholder="Enter Artist, Team or Event Name (eg. Lakers)"
 											[(ngModel)]="form.keyword" formControlName='keyword' [matAutocomplete]="auto" [ngClass]="{'is-invalid': keyword.errors && keyword.errors.required && (keyword.dirty || keyword.touched)}" required>
 					<mat-autocomplete #auto="matAutocomplete">
@@ -16,19 +16,19 @@
 				</div>
 		</div>
 		<div class="form-group row">
-			<label for="Category" class="col-2 col-form-label">Category</label>
-			<div class="col-sm-2">
+			<label for="Category" class="col-md-2 col-form-label">Category</label>
+			<div class="col-md-2">
 				<select class="custom-select" formControlName='category' [(ngModel)]="form.category" name="category" id="Category">
 					<option *ngFor="let category of categories" [value]="category"> {{category}}</option>
 				</select>
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="Distance" class="col-2 col-form-label">Distance</label>
-			<div class="col-sm-3">
+			<label for="Distance" class="col-md-2 col-form-label">Distance</label>
+			<div class="col-md-3">
 				<input type="number" class="form-control" formControlName='distance' [(ngModel)]="form.distance" name="distance" id="Distance" placeholder="10">
 			</div>
-			<div class="col-sm-3">
+			<div class="col-md-3">
 				<select class="custom-select" formControlName='distanceUnit' [(ngModel)]="form.distanceUnit" name="distanceUnit" id="DistanceUnit">
 					<option value="miles">Miles</option>
 					<option value="kilometers">Kilometers</option>
@@ -36,8 +36,8 @@
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="From" class="col-2 col-form-label requiredField">From</label>
-			<div class="col-sm-8">
+			<label for="From" class="col-md-2 col-form-label requiredField">From</label>
+			<div class="col-md-8">
 				<div class="custom-control custom-radio">
 					<input type="radio" id="StartLocationHere" formControlName='fromWhere' [(ngModel)]="form.fromWhere" name="fromWhere" value="Here" class="custom-control-input">
 					<label class="custom-control-label" for="StartLocationHere">Current location</label>

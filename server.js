@@ -35,6 +35,7 @@ app.get('/spotify/:name', (req,res) => {
 						.then(response => {
 							res.send(response.body.artists.items);
 						})
+						.catch(err => res.status(500).send('error'));
 				}
 			);
 		})
@@ -49,6 +50,7 @@ app.get('/auto-complete/:name',(req,res) => {
 				res.send("");
 			}
 		})
+		.catch(err => res.status(500).send('error'));
 });
 app.post('/form/', bodyParser.json(),(req,res) => {
 	let formField = req.body;
@@ -62,6 +64,7 @@ app.post('/form/', bodyParser.json(),(req,res) => {
 				res.send("");
 			}
 		})
+		.catch(err => res.status(500).send('error'));
 });
 app.get('/img-search/:name', (req,res) => {
 	axios.get('https://www.googleapis.com/customsearch/v1?q=' + req.params.name + '&cx=010658708058310572216:wftzopcjwpg&imgSize=huge&imgType=news&num=8&searchType=image&key=AIzaSyAshBhvq4KJhOOj7Lw-vd19vOWDLDHV_KM')
@@ -72,6 +75,7 @@ app.get('/img-search/:name', (req,res) => {
 			res.send("");
 		}
 	})
+		.catch(err => res.status(500).send('error'));
 })
 app.get('/geo/:name', (req,res) => {
 	axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + req.params.name +'&key=AIzaSyAHzFtoldQOPyMVNEEJZN8QE5Adj-SuW0Q')
@@ -82,6 +86,7 @@ app.get('/geo/:name', (req,res) => {
 			res.send("");
 		}
 	})
+		.catch(err => res.status(500).send('error'));
 })
 app.get('/find-venue-id/:name', (req,res) => {
 	axios.get('https://api.songkick.com/api/3.0/search/venues.json?query=' + req.params.name +'&apikey=uVD27vJiXMdv5xMH')
@@ -93,6 +98,7 @@ app.get('/find-venue-id/:name', (req,res) => {
 			res.send("");
 		}
 	})
+		.catch(err => res.status(500).send('error'));
 })
 app.get('/find-venue-upcoming-event/:id', (req,res) => {
 	axios.get('https://api.songkick.com/api/3.0/venues/' + req.params.id +'/calendar.json?apikey=uVD27vJiXMdv5xMH')
@@ -104,6 +110,7 @@ app.get('/find-venue-upcoming-event/:id', (req,res) => {
 			res.send("");
 		}
 	})
+		.catch(err => res.status(500).send('error'));
 })
 function getSegmentId(category) {
 	switch (category) {

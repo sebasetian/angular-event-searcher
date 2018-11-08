@@ -1,4 +1,4 @@
-<h1>{{eventName}}</h1>
+<h1 class='name'>{{eventName}}</h1>
 <div class='buttons'>
 	<button type="button" class="border retButton" (click)="showList()"><i class="material-icons">keyboard_arrow_left</i>List</button>
 	<div class='otherButtons'>
@@ -12,25 +12,53 @@
 			</div>
 	</div>
 </div>
-<ngb-tabset class="tabset1">
+<ngb-tabset>
 	<ngb-tab class="detailTab" title="Event">
 		<ng-template ngbTabContent>
-			<event-detail-table></event-detail-table>
+			<div class='table-wrapper'>
+				<event-detail-table></event-detail-table>
+			</div>
 		</ng-template>
 	</ngb-tab>
-	<ngb-tab title="Artists/Teams">
+	<ngb-tab title="{{artistText()}}">
 		<ng-template ngbTabContent>
-			<artist-detail-table-wrapper></artist-detail-table-wrapper>
+			<div class='bar' *ngIf="service.isArtistLoading && !service.isDetailError">
+				<p>
+					<ngb-progressbar type="info" [value]="50" [striped]="true" [animated]="true"></ngb-progressbar>
+				</p>
+			</div>
+			<div class='error' *ngIf="service.artistList.isEmpty()">
+				<p style="width:80%">
+					<ngb-alert [dismissible]="false">
+						No records
+					</ngb-alert>
+				</p>
+			</div>
+			<artist-detail-table-wrapper *ngIf="!service.artistList.isEmpty()"></artist-detail-table-wrapper>
 		</ng-template>
 	</ngb-tab>
 	<ngb-tab title="Venue">
 		<ng-template ngbTabContent>
+			<div class='venue-wrapper'>
 			<venue-table></venue-table>
+			</div>
 		</ng-template>
 	</ngb-tab>
-	<ngb-tab title="Upcoming Event">
+	<ngb-tab title="{{upcomingText()}}">
 		<ng-template ngbTabContent>
-			<upcoming-events></upcoming-events>
+			<div class='bar' *ngIf="service.isUpcomingEventLoading && !service.isDetailError">
+				<p>
+					<ngb-progressbar type="info" [value]="50" [striped]="true" [animated]="true"></ngb-progressbar>
+				</p>
+			</div>
+			<div class='error' *ngIf="!service.isUpcomingEventLoading && service.upcomingEvents.length == 0">
+				<p style="width:80%">
+					<ngb-alert [dismissible]="false">
+						No records
+					</ngb-alert>
+				</p>
+			</div>
+			<upcoming-events *ngIf="!service.isUpcomingEventLoading && service.upcomingEvents.length > 0"></upcoming-events>
 		</ng-template>
 	</ngb-tab>
 </ngb-tabset>

@@ -39,7 +39,7 @@ export class ResultComponent implements OnInit {
 			}
 		})
 		this.service.currEvents.subscribe(events => {
-			if (events != null && events[0].name != undefined) {
+			if (events != null && (events.length == 0 || events[0].name != undefined)) {
 				this.searchEvents = events;
 				this.eventData = new MatTableDataSource<SearchEvents>(this.searchEvents);
 			}

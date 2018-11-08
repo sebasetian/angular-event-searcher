@@ -2,7 +2,7 @@ import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AutocompEvents, SearchEvents } from './schema/ticketMasterEvents';
 import { formField } from './schema/formField';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { Observable, EMPTY, Subject,of} from 'rxjs';
 import { ipApiJson, GeoCoding } from './schema/geo';
 import { PaneType } from './pane-type.enum'
@@ -15,7 +15,6 @@ import { StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service'
 })
 @Injectable()
 export class MainService {
-	
 	urlAutoComplete: string;
 	urlForm: string;
 	urlSpotify: string;
@@ -32,6 +31,11 @@ export class MainService {
 	sortedData: UpcomingEvent[];
 	venue: VenueInfo;
 	isResultLoading:boolean = false;
+	isFormError:boolean = false;
+	isDetailError:boolean = false;
+	isDetailLoading:boolean = true;
+	isUpcomingEventLoading:boolean = false;
+	isArtistLoading:boolean = false;
 	private eventSource = new Subject<SearchEvents[]>();
 	currEvents = this.eventSource.asObservable();
 	private SongkickSource = new Subject<UpcomingEvent[]>();
@@ -76,6 +80,7 @@ export class MainService {
 		}
 	}
 	findUpcomingEvents(name) {
+		this.isUpcomingEventLoading = true;
 		this.http.get<SongkickVenueInfo[]>(this.urlFindVenueId + name).pipe(switchMap(venues => {
 			if (venues == null) return of([]);
 			let id: number = -1;
@@ -86,6 +91,10 @@ export class MainService {
 				}
 			}
 			return this.http.get<SongkickEvent[]>(this.urlFindVenueUpcomingEvnet + id)
+		}), catchError((err) => {
+			this.isDetailError = true;
+			this.isUpcomingEventLoading = false;
+			throw 'here is a error';
 		})).subscribe(events => {
 			let ret: UpcomingEvent[] = [];
 			if (events != null && events.length > 0) {
@@ -101,7 +110,13 @@ export class MainService {
 				});
 			}
 			this.SongkickSource.next(ret);
-		});
+			this.isDetailError = false;
+			this.isUpcomingEventLoading = false;
+		},
+			error => {
+				this.isDetailError = true;
+				this.isUpcomingEventLoading = false;
+			});
 	}
 	findGeoLocation(address) {
 		return this.http.get<GeoCoding>(this.urlGeoCoding + address);
@@ -109,6 +124,12 @@ export class MainService {
 	findImg(name:string,artist: ArtistInfo) {
 		this.http.get<CustomSearchImg[]>(this.urlGoogleImgSearch + name).subscribe((items: CustomSearchImg[]) => {
 			artist.imgList = items;
+			this.isDetailError = false;
+			this.isArtistLoading = false;
+		},
+		error => {
+			this.isDetailError = true;
+			this.isArtistLoading = false;
 		});
 		if (this.artistList.selected.filter(p => p.name == name).length == 0) {
 			this.artistList.select(artist);
@@ -116,6 +137,7 @@ export class MainService {
 		
 	} 
 	findArtist(name:string, segment:string) {
+		this.isArtistLoading = true;
 		if (segment === undefined || segment !== 'Music') { 
 			let newTeam = new ArtistInfo();
 			newTeam.name = name;
@@ -135,7 +157,12 @@ export class MainService {
 					list[0].segment = 'Music';
 					this.findImg(name, list[0]);
 				}
-			});
+				this.isDetailError = false;
+			},
+				error => {
+					this.isDetailError = true;
+					this.isArtistLoading = false;
+				});
 		}
 	}
 	changeFavorite(event) {
@@ -164,30 +191,49 @@ export class MainService {
 			form.distance = 10;
 		}
 		if (form.fromWhere == 'Here') {
-			this.formObserable = this.http.get<ipApiJson>('http://ip-api.com/json').pipe(switchMap(json => {
+			this.http.get<ipApiJson>('http://ip-api.com/json').pipe(switchMap(json => {
 				form.lat = json.lat;
 				form.lng = json.lon;
 				return of(form);
-			}));
+			}),catchError((err) => {
+				this.isFormError = true;
+				throw 'here is a error';
+				})).pipe(switchMap(form => this.http.post(this.urlForm, form, httpOptions)))
+				.subscribe((events: SearchEvents[]) => {
+					this.eventSource.next(events || []);
+					this.isFormError = false;
+				},
+				error => {
+					this.isFormError = true;
+				});
 		} else {
-			this.formObserable = this.findGeoLocation(form.location).pipe(switchMap(json => {
+			this.findGeoLocation(form.location).pipe(switchMap(json => {
 				form.lat = json.lat;
 				form.lng = json.lng;
 				return of(form);
-			}));
+			}), catchError((err) => {
+				this.isFormError = true;
+				throw 'here is a error';
+				}))
+				.pipe(switchMap(form => this.http.post(this.urlForm, form, httpOptions)))
+				.subscribe((events: SearchEvents[]) => {
+					this.eventSource.next(events || []);
+					this.isFormError = false;
+				},
+				error => {
+					this.isFormError = true;
+				}); 
 		}
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json'
 			})
 		};
-		this.formObserable.pipe(switchMap(form => this.http.post(this.urlForm, form, httpOptions)))
-			.subscribe((events: SearchEvents[]) => this.eventSource.next(events)); 
 	}
 	isFavorite(event: SearchEvents):boolean {
 		if (event == null) return;
 		let currList: SearchEvents[] = this.localStorage.get('favorate_list');
-		if (currList !== null) {
+		if (currList !== null && currList !== undefined) {
 			for (let i = 0; i < currList.length; i++) {
 				if (currList[i].id == event.id) return true;
 			} 

@@ -20,7 +20,7 @@ export class UpcomingEventsComponent implements OnInit {
 	orders = ['Ascending','Descending'];
 	currRanking:string;
 	currOrder:string;
-	showMore:boolean;
+	isShowedMore:boolean;
 	isAniDisabled:boolean;
 	showMoreOrLess:string;
 	constructor(public service: MainService) { }
@@ -30,7 +30,7 @@ export class UpcomingEventsComponent implements OnInit {
 	ngOnInit() {
 		this.currRanking = 'Default';
 		this.currOrder = 'Ascending';
-		this.showMore = false;
+		this.isShowedMore = false;
 		this.showMoreOrLess = 'Show More';
 		this.isAniDisabled = true;
 		this.service.selection.changed.subscribe(changed => {
@@ -40,7 +40,7 @@ export class UpcomingEventsComponent implements OnInit {
 			}
 			this.currRanking = 'Default';
 			this.currOrder = 'Ascending';
-			this.showMore = false;
+			this.isShowedMore = false;
 			this.showMoreOrLess = 'Show More';
 			this.isAniDisabled = true;
 		})
@@ -74,11 +74,11 @@ export class UpcomingEventsComponent implements OnInit {
 	}
 	showSwitch() {
 		this.isAniDisabled = false;
-		this.showMore = !this.showMore;
-		if (!this.showMore) {
-			this.showMoreOrLess = 'Show Less';
-		} else {
+		this.isShowedMore = !this.isShowedMore;
+		if (!this.isShowedMore) {
 			this.showMoreOrLess = 'Show More';
+		} else {
+			this.showMoreOrLess = 'Show Less';
 		}
 	}
 }
