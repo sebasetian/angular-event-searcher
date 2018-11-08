@@ -40,7 +40,7 @@ export class MainService {
 	currEvents = this.eventSource.asObservable();
 	private SongkickSource = new Subject<UpcomingEvent[]>();
 	currSougkickEvent = this.SongkickSource.asObservable();
-	constructor(private http: HttpClient, @Inject(LOCAL_STORAGE) private localStorage:StorageService) {
+	constructor(public http: HttpClient, @Inject(LOCAL_STORAGE) private localStorage:StorageService) {
 		this.urlAutoComplete ='/auto-complete/';
 		this.urlForm = '/form/';
 		this.currPane = PaneType.resPane;
@@ -185,20 +185,14 @@ export class MainService {
 			return eventNames;
 		}));
 	}
+	
 	postForm(form: formField) {
 		this.isResultLoading = true;
 		if (form.distance == undefined) {
 			form.distance = 10;
 		}
 		if (form.fromWhere == 'Here') {
-			this.http.get<ipApiJson>('http://ip-api.com/json').pipe(switchMap(json => {
-				form.lat = json.lat;
-				form.lng = json.lon;
-				return of(form);
-			}),catchError((err) => {
-				this.isFormError = true;
-				throw 'here is a error';
-				})).pipe(switchMap(form => this.http.post(this.urlForm, form, httpOptions)))
+			of(form).pipe(switchMap(form => this.http.post(this.urlForm, form, httpOptions)))
 				.subscribe((events: SearchEvents[]) => {
 					this.eventSource.next(events || []);
 					this.isFormError = false;

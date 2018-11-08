@@ -4,6 +4,7 @@ import { MainService } from './main.service';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { formField } from './schema/formField';
 import { PaneType } from './pane-type.enum';
+import { ipApiJson } from './schema/geo';
 @Component({
   selector: 'app-root',
   templateUrl: './main.component.html',
@@ -16,11 +17,14 @@ export class MainComponent implements OnInit {
 	options = [];
 	categories = ['All','Music','Sport','Arts & Theatre','Film','Miscellaneous'];
 	form = new formField('', 'All', 'miles', 'Here', '',0,0);
+	isIpRetrieved:boolean = false;
 	public submitted: boolean = false;
 	
 	submitForm() {
 		this.submitted = false;
 		this.service.currPane = PaneType.resPane;
+		this.service.selection.clear();
+		this.service.artistList.clear();
 		this.service.postForm(this.form);
 		this.submitted = true;
 	}
@@ -45,6 +49,14 @@ export class MainComponent implements OnInit {
 	showFav() {
 		this.service.currPane = PaneType.favoritePane;
 	}
+	getIpApi() {
+		this.service.http.get<ipApiJson>('http://ip-api.com/json').subscribe(json => {
+			this.form.lat = json.lat;
+			this.form.lng = json.lon;
+			this.isIpRetrieved = true;
+			console.log(json);
+		})
+	}
 	constructor(public service: MainService) {
 		
 	}
@@ -57,10 +69,17 @@ export class MainComponent implements OnInit {
 			'fromWhere': new FormControl(this.form.fromWhere),
 			'location': new FormControl({value: this.form.location, disabled: this.form.fromWhere === 'Here'},Validators.required)
 		});
+		this.getIpApi();
 		this.eventForm.get('fromWhere').valueChanges
 			.subscribe(() => {
-				if (this.form.fromWhere === 'Here') this.eventForm.get('location').disable();
-				else this.eventForm.get('location').enable();
+				if (this.form.fromWhere === 'Here') {
+					this.eventForm.get('location').disable();
+					this.isIpRetrieved = false;
+					this.getIpApi();
+				}
+				else {
+					this.eventForm.get('location').enable();
+				}
 			})
 		this.eventForm.get('keyword').valueChanges
 			.pipe(debounceTime(500), switchMap(eventstr => this.service.searchAutoComplete(eventstr))).
@@ -72,6 +91,7 @@ export class MainComponent implements OnInit {
 				this.options = [];
 			});
 	}
+	get fromWhere() { return this.eventForm.get('fromWhere')};
 	get keyword() { return this.eventForm.get('keyword')}; 
 	get location() { return this.eventForm.get('location') }; 
 }

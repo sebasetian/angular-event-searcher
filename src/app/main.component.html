@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		</fieldset>
-		<button type="submit" class="btn btn-primary" id="submitBtn" [disabled]="eventForm.invalid"><i class="material-icons">search</i>Search</button>
+		<button type="submit" class="btn btn-primary" id="submitBtn" [disabled]="eventForm.invalid || (!isIpRetrieved && form.fromWhere === 'Here')"><i class="material-icons">search</i>Search</button>
 		<button type="button" class="btn" (click)="clearAll()"><i class="material-icons md-18">clear_all</i>Clear</button>
 	</form>
 </div>
