@@ -4,7 +4,7 @@
 			<option *ngFor="let ranking of rankings" [value]="ranking"> {{ranking}}</option>
 		</select>
 	</div>
-	<div class="col-sm-3">
+	<div class="margin-select col-sm-3">
 		<select class="custom-select" [(ngModel)]="currOrder"[disabled]="currRanking=='Default'" name="order" id="order" [ngClass]="{'disabled':currRanking=='Default'}" (change)="sortData()">
 			<option *ngFor="let order of orders" [value]="order"> {{order}}</option>
 		</select>

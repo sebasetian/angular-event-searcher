@@ -24,3 +24,9 @@
 #order {
 	margin-left: -50px;
 }
+
+@media (max-width: 576px) {
+	#order {
+		margin-left: 0px;
+	}
+}
