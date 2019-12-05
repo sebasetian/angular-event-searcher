@@ -32,7 +32,7 @@
     "angular-animations": "0.0.3",
     "angular-dynamic-number": "^2.5.1",
     "angular-svg-round-progressbar": "^2.0.0",
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
     "core-js": "^2.5.4",
